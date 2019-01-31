@@ -2,40 +2,161 @@
 %% This is file, `analysis_theorems.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2018/12/21,22:30
+%% Generated on :  2019/01/01,11:57
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_theorems,extract-env={theorem,corollary,claim}
 %% 
 \documentclass[12pt]{article}
-  \usepackage{amsthm}
-  \usepackage{amsfonts, amsmath}
-  \usepackage[dvipsnames]{xcolor}
-  %\newtheorem{theorem}{Theorem}
-  \theoremstyle{definition}
-  \definecolor{Tm}{rgb}{0,0,0.80}
-  %\newtheorem{definition}{Definition}
-  \newtheorem{definition}{\color{NavyBlue}{\textbf{Definition}}}
-  \newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}
-  \newtheorem{corollary}{\color{ForestGreen}{\textbf{Corollary}}}
-  %\newtheorem{example}{Example}
+\usepackage{amsthm}
+\usepackage{amsfonts, amsmath}
+\usepackage[dvipsnames]{xcolor}
+
+\theoremstyle{definition}
+\definecolor{Tm}{rgb}{0,0,0.80}
+\newcommand{\navy}[1]{\textcolor{MidnightBlue}{\bf #1}}
+\newtheorem{definition}{\color{MidnightBlue}{\textbf{Definition}}}
+\newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}
+\newtheorem{corollary}{\color{ForestGreen}{\textbf{Corollary}}}
+\usepackage{mathrsfs}
+
+% algos
+\usepackage[linesnumbered, lined, ruled]{algorithm2e}
+
    \usepackage{bm}
+   \usepackage{bbm}
+
+\newcommand{\ls}{\leqslant}
+\newcommand{\gs}{\geqslant}
+\newcommand{\vp}{\varphi}
+\newcommand{\ve}{\varepsilon}
+
 \newcommand{\e}{\epsilon}
-%\newcommand{\d}{\delta}
+\newcommand{\dd}{\delta}
 \newcommand{\D}{\Delta}
+
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\U}{\mathcal{U}}
+\newcommand{\T}{\mathbb{R}}
 \usepackage{mathtools}
 \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2}
 \newcommand{\norm}[1]{\lVert#1\rVert}
 \newcommand{\x}{\bm{x}}
 \newcommand{\xib}{\bm{\xi}}
-\usepackage{mathrsfs}
-\usepackage{algpseudocode,algorithm,algorithmicx}
-\algnewcommand\algorithmicforeach{\textbf{for each}}
-\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
-\newcommand*\Let[2]{\State #1 $\gets$ #2}
+
+\newcommand{\CC}{\mathbbm C}
+\newcommand{\FF}{\mathbbm F}
+\newcommand{\RR}{\mathbbm R}
+\newcommand{\NN}{\mathbbm N}
+\newcommand{\PP}{\mathbbm P}
+\newcommand{\EE}{\mathbbm E}
+\newcommand{\TT}{\mathbbm T}
+\newcommand{\VV}{\mathbbm V}
+\newcommand{\QQ}{\mathbbm Q}
+\newcommand{\WW}{\mathbbm W}
+\newcommand{\ZZ}{\mathbbm Z}
+\renewcommand{\SS}{\mathbbm S}
+
+\newcommand{\GG}{\mathsf G}
+\newcommand{\XX}{\mathsf X}
+\renewcommand{\AA}{\mathsf A}
+\newcommand{\YY}{\mathsf Y}
+\newcommand{\ZZZ}{\mathsf Z}
+
+\newcommand{\aA}{\mathscr A}
+\newcommand{\cC}{\mathscr C}
+\newcommand{\iI}{\mathscr I}
+\newcommand{\eE}{\mathscr E}
+\newcommand{\fF}{\mathscr F}
+\newcommand{\rR}{\mathscr R}
+\newcommand{\sS}{\mathscr S}
+\newcommand{\lL}{\mathscr L}
+
+\newcommand{\cG}{\mathscr G}
+
+\newcommand{\pP}{\mathcal P}
+\newcommand{\vV}{\mathcal V}
+\newcommand{\dD}{\mathcal D}
+\newcommand{\mM}{\mathcal M}
+\newcommand{\oO}{\mathcal O}
+\newcommand{\gG}{\mathcal G}
+\newcommand{\hH}{\mathcal H}
+\newcommand{\tT}{\mathcal T}
+\newcommand{\bB}{\mathcal B}
+
+% operators
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\graph}{graph}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\Prob}{Prob}
+\DeclareMathOperator{\determinant}{det}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\corr}{Corr}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\mse}{mse}
+\DeclareMathOperator{\se}{se}
+\DeclareMathOperator{\row}{row}
+%\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\range}{rng}
+\DeclareMathOperator{\kernel}{ker}
+\DeclareMathOperator{\dimension}{dim}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\colspace}{colspace}
+
+% argmax and min
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+
+% sets
+\newcommand{\Int}{\text{Int }}
+\newcommand{\Cl}{\text{Cl }}
 
 \begin{document}
+
+\begin{theorem}[Sequences in compact metric spaces have a convergent subsequence]
+If $(p_n)$ is a sequence in a compact metric space $X$, then some subsequence of $(p_n)$ converges to a point of $X$.
+\end{theorem}
+
+\begin{theorem}[Bolzano-Weierstrass]
+Every bounded sequence in $\RR^k$ has a convergent subsequence.
+\end{theorem}
+
+\begin{theorem}[Facts about Cauchy sequences]
+We have that
+\begin{enumerate}
+\item In any metric space $X$, every convergent sequence is a Cauchy sequence.
+\item If $X$ is a compact metric space and if $(p_n)$ is a Cauchy sequence in $X$, then $(p_n)$ converges to some point of $X$.
+\item In $\R^k$, every Cauchy sequence converges.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Convergence of monotonic sequences]
+Let $(s_n)$ be a monotonic sequence. Then $(s_n)$ converges if and only if it is bounded.
+\end{theorem}
+
+\begin{theorem}[Continuous mappings on compact sets are uniformly continuous.]
+Let $X,Y$ be metric spaces and assume $X$ is compact. If $f: X \to Y$ is continuous, then it is uniformly continuous.
+\end{theorem}
+
+\begin{theorem}[The image of a continuous function which maps from a compact set is compact]
+Let $X,Y$ be metric spaces and assume $X$ is compact. If $f: X \to Y$ is continuous, then $f(X) \subset Y$ is compact.
+\end{theorem}
+
+\begin{theorem}[Mean Value Theorem]
+If $f$ is a real continuous function on $[a,b]$ which is differentiable on $(a,b)$, then there is a point $x \in (a,b)$ at which
+\begin{equation}
+f(b) - f(a) = (b - a) f'(x)
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Banach Fixed-Point Theorem]
+If $X$ is a complete metric space, and if $\vp$ is a contraction of $X$ into $X$, then there exists a unique $x \in X$ such that $\vp(x) = x$.
+\end{theorem}
 
 \end{document}

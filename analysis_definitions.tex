@@ -1,0 +1,542 @@
+%% 
+%% This is file, `analysis_definitions.tex',
+%% generated with the extract package.
+%% 
+%% Generated on :  2019/01/30,23:49
+%% From source  :  "Analysis Notes".tex
+%% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
+%% 
+\documentclass[12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Packages
+
+% AMS
+\usepackage{amsmath, amssymb, amsthm, amsbsy}
+% Geometry
+\usepackage{geometry}
+% Colors
+\usepackage[usenames,dvipsnames]{xcolor}
+% Figures
+\usepackage{float}
+\usepackage{graphicx}
+% Multi column lists
+\usepackage{multicol}
+% Subfigures
+\usepackage{caption}
+\usepackage{subcaption}
+% Caligraphic
+\usepackage{mathrsfs}
+\usepackage{bbm}
+% Bold
+\usepackage{bm}
+% algos
+\usepackage[linesnumbered, lined, ruled]{algorithm2e}
+% Spacing
+\usepackage{setspace}
+% Refs
+\usepackage[colorlinks=true, citecolor=Blue, linkcolor=blue]{hyperref}
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{PineGreen}
+\colorlet{myurlcolor}{Aquamarine}
+
+\hypersetup{
+  linkcolor  = mylinkcolor!\myshade!black,
+  citecolor  = mycitecolor!\myshade!black,
+  urlcolor   = myurlcolor!\myshade!black,
+  colorlinks = true,
+}
+% Bibliography
+\usepackage{filecontents}
+\usepackage{natbib}
+% Indent
+\usepackage{indentfirst}
+% Pretty lists
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+\setlist[itemize]{itemsep=2pt,topsep=3pt}
+\setlist[enumerate,1]{label=(\roman*)}
+
+% Code
+\usepackage{listings}
+
+% Appendix
+\usepackage[toc,page]{appendix}
+
+% Math
+\usepackage{mathtools}
+\usepackage{xparse}
+
+% Equation numbering
+\numberwithin{equation}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Document Settings
+
+% Figure path
+\graphicspath{{./figures/}}
+% Matrix columns
+\setcounter{MaxMatrixCols}{10}
+% So pages will break inside long equation environments
+\allowdisplaybreaks
+% Font
+\usepackage{mathpazo}
+\linespread{1.05}
+%\usepackage{courier}
+% Geometry
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
+% Counters
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Colors
+
+\definecolor{Tm}{rgb}{0,0,0.80}
+\newcommand{\navy}[1]{\textcolor{MidnightBlue}{\bf #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Environments
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
+\newtheorem{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
+\newtheorem{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
+\newtheorem{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
+\newtheorem{axiom}[theorem]{\color{ForestGreen}{\textbf{Axiom}}}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{\color{MidnightBlue}{\textbf{Definition}}}[section]
+\newtheorem{example}{\color{WildStrawberry}Example}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{condition}[assumption]{Condition}
+\newtheorem*{solution}{\color{Goldenrod}Solution}
+% \newenvironment{solution}[1][\proofname]{%
+%   \proof[\bf \color{Goldenrod}Solution to #1]%
+% }{\endproof}
+
+\newtheorem{exercise}{\color{YellowOrange}Exercise}[section]
+
+% Literature Summary Standards
+\newtheorem*{motivation}{Motivation}
+\newtheorem*{summary}{Summary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{model}{Model}
+\newtheorem*{tresults}{Theoretical Results}
+\newtheorem*{eresults}{Empirical Results}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Math macros
+
+% Math ``brackets''
+\newcommand\parens[1]{\left( #1 \right)}
+\newcommand\squares[1]{\left[ #1 \right]}
+\newcommand\braces[1]{\left\{ #1 \right\}}
+\newcommand\angles[1]{\left\langle #1 \right\rangle}
+\newcommand\ceil[1]{\left\lceil #1 \right\rceil}
+\newcommand\floor[1]{\left\lfloor #1 \right\rfloor}
+\newcommand\abs[1]{\left| #1 \right|}
+\newcommand\dabs[1]{\left\| #1 \right\|}
+\newcommand\vect[1]{\mathbf{#1}}
+\newcommand\closure[1]{\overline{#1}}
+\newcommand\pset[1]{\mathcal{P}\left(#1\right)}
+\newcommand\inv[1]{#1^{-1}}
+\newcommand\norm[1]{\lVert#1\rVert}
+
+% inner product
+\providecommand{\inner}[1]{\left\langle{#1}\right\rangle}
+% stochastic dominance
+\newcommand{\lesd}{\preceq_{\textrm{SD}}}
+
+% Set builder (use \Set ultimately and separate by ;)
+\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{\setargs{#1}}
+\NewDocumentCommand{\setargs}{>{\SplitArgument{1}{;}}m}
+{\setargsaux#1}
+\NewDocumentCommand{\setargsaux}{mm}
+{\IfNoValueTF{#2}{#1} {#1\nonscript\:\delimsize\vert\allowbreak\nonscript\:\mathopen{}#2}}%
+\def\Set{\set*}%
+
+% Shortcut math
+\newcommand{\ls}{\leqslant}
+\newcommand{\gs}{\geqslant}
+\def\ss{\subset}
+\def\nss{\not \ss}
+\def\sps{\supset}
+\def\pss{\subsetneq}
+\def\prece{\preccurlyeq}
+\def\condgap{\hspace{1cm}}
+\def\eprec{\preceq}
+% argmax and min
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\es}{\emptyset}
+% Implication and reverse implication
+\def\imp{\Rightarrow}
+\def\pmi{\Leftarrow}
+% Integers up to number
+\newcommand\intsfin[1]{\braces{1, \ldots, #1}}
+% Logic
+\def\bic{\Leftrightarrow}
+% Bold and italic
+\newcommand\boldit[1]{\textbf{\textit{#1}}}
+% Misc math
+\newcommand{\st}{\ensuremath{\ \mathrm{s.t.}\ }}
+\newcommand{\setntn}[2]{ \{ #1 : #2 \} }
+\newcommand{\cf}[1]{ \lstinline|#1| }
+\newcommand{\fore}{\therefore \quad}
+\newcommand{\tod}{\stackrel { d } {\to} }
+\newcommand{\tow}{\stackrel { w } {\to} }
+\newcommand{\toprob}{\stackrel { p } {\to} }
+\newcommand{\toms}{\stackrel { ms } {\to} }
+\newcommand{\eqdist}{\stackrel{d} {=} }
+\newcommand{\iidsim}{\stackrel{\textrm{ {\sc iid }}} {\sim} }
+\newcommand{\1}{\mathbbm 1}
+\newcommand{\dee}{\,{\rm d}}
+\newcommand{\given}{\, | \,}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+
+% Shortcut greek
+\def\a{\alpha}
+\def\b{\beta}
+\def\g{\gamma}
+\def\D{\Delta}
+\def\d{\delta}
+\def\z{\zeta}
+\def\k{\kappa}
+\def\l{\lambda}
+\def\n{\nu}
+\def\r{\rho}
+\def\s{\sigma}
+\def\t{\tau}
+\def\x{\xi}
+\def\w{\omega}
+\def\W{\Omega}
+% Nice greek
+\newcommand{\p}{\varphi}
+\newcommand{\e}{\varepsilon}
+
+% Shorcut vectors
+\def\vx{\vect{x}}
+\def\vy{\vect{y}}
+\def\va{\vect{a}}
+\def\vb{\vect{b}}
+
+\newcommand{\CC}{\mathbbm C}
+\newcommand{\FF}{\mathbbm F}
+\newcommand{\RR}{\mathbbm R}
+\newcommand{\NN}{\mathbbm N}
+\newcommand{\PP}{\mathbbm P}
+\newcommand{\EE}{\mathbbm E}
+\newcommand{\TT}{\mathbbm T}
+\newcommand{\VV}{\mathbbm V}
+\newcommand{\QQ}{\mathbbm Q}
+\newcommand{\WW}{\mathbbm W}
+\newcommand{\ZZ}{\mathbbm Z}
+\renewcommand{\SS}{\mathbbm S}
+
+% Expectation/Probability
+\newcommand{\ee}[1]{\mathbbm{E}[{#1}]}
+\newcommand{\pp}[1]{\mathbbm{P}({#1})}
+
+\newcommand{\GG}{\mathsf G}
+\newcommand{\XX}{\mathsf X}
+\renewcommand{\AA}{\mathsf A}
+\newcommand{\YY}{\mathsf Y}
+\newcommand{\ZZZ}{\mathsf Z}
+
+\newcommand{\aA}{\mathscr A}
+\newcommand{\cC}{\mathscr C}
+\newcommand{\iI}{\mathscr I}
+\newcommand{\eE}{\mathscr E}
+\newcommand{\fF}{\mathscr F}
+\newcommand{\rR}{\mathscr R}
+\newcommand{\sS}{\mathscr S}
+\newcommand{\lL}{\mathscr L}
+\newcommand{\cG}{\mathscr G}
+
+\newcommand{\pP}{\mathcal P}
+\newcommand{\vV}{\mathcal V}
+\newcommand{\dD}{\mathcal D}
+\newcommand{\mM}{\mathcal M}
+\newcommand{\oO}{\mathcal O}
+\newcommand{\gG}{\mathcal G}
+\newcommand{\hH}{\mathcal H}
+\newcommand{\tT}{\mathcal T}
+\newcommand{\bB}{\mathcal B}
+
+% Common collections
+\def\cA{\col{A}}
+\def\cB{\col{B}}
+\def\cC{\col{C}}
+\def\cT{\col{T}}
+\def\cU{\col{U}}
+
+% Common closures
+\def\clA{\closure{A}}
+\def\clB{\closure{B}}
+\def\clK{\closure{K}}
+
+% operators
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\graph}{graph}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\Prob}{Prob}
+\DeclareMathOperator{\determinant}{det}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\corr}{Corr}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\mse}{mse}
+\DeclareMathOperator{\se}{se}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\range}{rng}
+\DeclareMathOperator{\kernel}{ker}
+\DeclareMathOperator{\dimension}{dim}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Cl}{Cl}
+
+
+\begin{document}
+
+\begin{definition}[Pointwise Convergence]
+A sequence of functions $(f_n)_n$ \navy{converges pointwise} to a function $f$ on $E$ if for every $\e > 0$ and for all $x \in E$ there is an integer $N$ (which depends on $x$) such that for all $n \geq N$
+\begin{equation*}
+|f_n(x) - f(x)| < \e
+\end{equation*}
+\end{definition}
+
+\begin{definition}[Uniform Convergence]
+A sequence of functions $(f_n)_n$ \navy{converges uniformly} to a function $f$ on $E$ if for every $\e > 0$ there is an integer $N$ such that for all $n \geq N$ and for all $x \in E$ we have
+\begin{equation*}
+|f_n(x) - f(x)| < \e
+\end{equation*}
+\end{definition}
+
+\begin{definition}[Uniformly cauchy]
+A sequence of functions $(f_n)$ is \navy{uniformly cauchy} if $\forall \e > 0$ $\exists N \in \NN$ such that $\forall n,m \geq N$ and $\forall x \in X$, we have $|f_n(x) - f_m(y)| < \e$.
+\end{definition}
+
+\begin{definition}[Power Series]
+A \navy{power series} is a function of the form
+\begin{equation}
+f(x) = \sum_{n=0}^\infty c_n x^n
+\end{equation}
+where $c_n \in \CC$ are complex coefficients.
+\end{definition}
+
+\begin{definition}[Radius of convergence]
+To a power series we can associate a number $R \in [0, \infty]$ (thus $R$ is an \emph{extended} real number) called its \navy{radius of convergence} such that
+\begin{enumerate}
+\item $\sum_{n=0}^\infty c_n x^n$ converges for every $|x| < R$.
+\item $\sum_{n=0}^\infty c_n x^n$ diverges for every $|x| > R$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Equicontinuous]
+A family $\fF$ of complex functions $f$ defined on a set $E$ in a metric space $X$ is said to be \navy{equicontinuous} on $E$ if for every $\e > 0$ there exists a $\d > 0$ such that
+\begin{equation*}
+|f(x) - f(y)| < \e
+\end{equation*}
+whenever $d(x,y) < \d$, $x \in E$, $y \in E$, and $f \in \fF$. (Notice: every member of an equicontinuous family is uniformly continuous)
+\end{definition}
+
+\begin{definition}[Open, open relative to]
+Let $E \subset U \subset X$, where $X$ is a metric space.
+\begin{enumerate}
+\item $E$ is an \navy{open} subset of $X$ if for each point $p \in E$ there exists an $r > 0$ such that for all $q \in X$ for which $d(p,q) < r$ we have that $q \in E$.
+\item $E$ is \navy{open relative to} $Y$ if for each point $p \in E$ there exists an $r > 0$ such that for all $q \in Y$ for which $d(p,q) < r$ we have that $q \in E$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Continuous]
+Suppose $X$ and $Y$ are metric spaces, $E \subset X$, $p \in E$, and $f$ maps $E$ into $Y$. Then $f$ is \navy{continuous} at $p$ if for every $\e > 0$ there there exists a $\d > 0$ such that for all $x \in E$ for which $d_X(x,p) < \d$, we have that $d_Y(f(x), f(p)) < \e$.
+\end{definition}
+
+\begin{definition}[Uniformly Continuous]
+Let $f$ be a mapping of a metric space $X$ into a metric space $Y$. We say that $f$ is \navy{uniformly continuous} on $X$ if for every $\e > 0$ there exists a $\d > 0$ such that for all $p,q \in X$ for which $d_X(p,q) < \delta$, we have $d_Y(f(p),f(q)) < \e$.
+\end{definition}
+
+\begin{definition}[Dense] TFAE: $E$ is \navy{dense} in $X$ if
+\begin{enumerate}
+\item  Every point of $X$ is a limit point of $E$ or a point of $E$ (or both).
+\item $\bar{E} = X$.
+\item $\forall \e > 0$ and $\forall x \in X$ we have that $B(x,\e) \cap E \neq \emptyset$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Open Cover]
+Let $I$ be an arbitrary index set. A collection $(G_i)_{i \in I}$ of open sets $G_i \subset X$ is called an \navy{open cover} of $X$ if $X \subset \cup_{i \in I} G_{i}$.
+\end{definition}
+
+\begin{definition}[Compact]
+$X$ is \navy{compact} if every open cover of $X$ contains a finite subcover. More explicitly, for every open cover $(G_i)_{i \in I}$ there exists $m \in \NN$ and $i_1, i_2, \ldots, i_m \in I$ such that $X \subset \cup_{j=1}^m G_{i_j}$.
+\begin{remark}
+This is also called the Heine-Borel property.
+\end{remark}
+\end{definition}
+
+\begin{definition}[Compact subset]
+A subset $A \subset X$ is called \navy{compact subset} if $(A,d\vert_{A\times A})$ is a compact metric space. $d\vert_{A\times A}$ is the restriction of $d$ to $A \times A$.
+\end{definition}
+
+\begin{definition}[Relatively compact or precompact]
+A subset $A \ss X$ is called \navy{relatively compact} or \navy{precompact} if the closure $\bar{A} \ss X$ is compact.
+\end{definition}
+
+\begin{definition}[Sequentially compact]
+A metric space $X$ is \navy{sequentially compact} if every sequence in $X$ has a convergent subsequence.
+\begin{remark}
+This is also called the Bolzano-Weierstass property.
+\end{remark}
+\end{definition}
+
+\begin{definition}[Bounded metric space]
+A metric space $X$ is \navy{bounded} if it fits in a single fixed ball. More precisely, there exists some $x_0 \in X$ and $r > 0$ such that $X \subseteq B(x_0,r)$.
+\end{definition}
+
+\begin{definition}[Totally bounded]
+A metric space $X$ is \navy{totally bounded} if for every $\e > 0$ there exist finitely many balls of radius $\e$ that cover $X$.
+\end{definition}
+
+\begin{definition}[Supremum, Infimum]
+Let $S$ be an ordered set, $E \subset S$, and $E$ be bounded above. Suppose there exists an $\alpha \in S$ with the following properties:
+\begin{enumerate}
+\item $\alpha$ is an upper bound of $E$.
+\item $If \gamma < \alpha$ then $\gamma$ is not an upper bound of $E$.
+\end{enumerate}
+Then $\alpha$ is called the least upper bound of $E$ or \navy{supremum} of $E$ and we write $\alpha = \sup E$. Similarly, $\alpha$ is the greatest lower bound of $E$ or \navy{infimum} of $E$ if
+\begin{enumerate}
+\item $\alpha$ is a lower bound of $E$.
+\item $If \beta > \alpha$ then $\beta$ is not a lower bound of $E$.
+\end{enumerate}
+and we write $\alpha = \inf E$.
+\end{definition}
+
+\begin{definition}[Limit Superior, Inferior]
+Let $\parens{x_n}$ be a sequence of real numbers.
+
+\begin{enumerate}
+\item The \navy{limit superior} of the sequence is defined by
+\begin{equation}
+\limsup\limits_{n \to \infty} x_n = \lim_{n \to \infty}\parens{\sup_{m \geq n} x_m}
+\end{equation}
+or
+\begin{equation}
+\limsup\limits_{n \to \infty} x_n = \inf_{n \geq 0} \parens{\sup_{m \geq n} x_m} = \inf\Set{\sup \Set{x_m; m \geq n}; n \geq 0}
+\end{equation}
+
+\textbf{Alternatively}, the limit superior of the sequence is the smallest $b \in \RR$ such that $\forall \e > 0$ $\exists N$ such that $x_n < b + \e$ $\forall n > N$. Thus, any number larger than the limit superior is an upper bound for the sequence after a finite number of terms (hence, only a finite number of elements are greater that $b + \e$).
+
+\textbf{Alternatively}, the limit superior of the sequence is the supremum of the set of subsequential limits.
+
+\item The \navy{limit inferior} of the sequence is defined by
+\begin{equation}
+\liminf\limits_{n \to \infty} x_n = \lim_{n \to \infty}\parens{\inf_{m \geq n} x_m}
+\end{equation}
+or
+\begin{equation}
+\liminf\limits_{n \to \infty} x_n = \sup_{n \geq 0} \parens{\inf_{m \geq n} x_m} = \sup\Set{\inf \Set{x_m; m \geq n}; n \geq 0}
+\end{equation}
+\end{enumerate}
+
+\end{definition}
+
+\begin{definition}[Limit point]
+A point $p$ is a \navy{limit point} of the set $E$ if every neighborhood of $p$ contains a point $q \neq p$ such that $q \in E$.
+\end{definition}
+
+\begin{definition}[Closed]
+$E$ is \navy{closed} if every limit point of $E$ is a point of $E$.
+\end{definition}
+
+\begin{definition}[Interior]
+A point $p$ is an \navy{interior point} of $E$ if there is a neighborhood $N$ of $p$ such that $N \subset E$.
+\end{definition}
+
+\begin{definition}[Open]
+$E$ is \navy{open} if every point of $E$ is an interior point of $E$.
+\end{definition}
+
+\begin{definition}[Bounded]
+$E$ is \navy{bounded} if there is a real number $M$ and a point $q \in X$ such that $d(p,q) < M$ for all $p \in E$.
+\end{definition}
+
+\begin{definition}[Separated, Connected]
+Two subsets $A$ and $B$ of a metric space $X$ are said to be \navy{separated} if both $A \cap \bar{B}$ and $\bar{A} \cap B$ are empty (i.e., if no point of $A$ lies in the closure of $B$ and no point of $B$ lies in the closure of $A$). A set $E \subset X$ is said to be \navy{connected} if $E$ is not a union of two nonempty separated sets.
+\end{definition}
+
+\begin{definition}[Convergent Sequence]
+A sequence $(p_n)$ in a metric space $X$ is said to \navy{converge} if there is a point $p \in X$ such that for every $\e > 0$ there is an integer $N$ such that $n \geq N$ implies $d(p_n,p) < \e$.
+\end{definition}
+
+\begin{definition}[Subsequence, Subsequential Limit]
+Given a sequence $(p_n)$, consider a sequence $(n_k)$ of positive integers such that $n_1 < n_2 < n_3 < \cdots $. Then the sequence $(p_{n_i})$ is called a \navy{subsequence} of $(p_n)$. If $(p_{n_i})$ converges, its limit is called a \navy{subsequential limit} of $(p_n)$.
+\end{definition}
+
+\begin{definition}[Cauchy Sequence]
+A sequence $(p_n)$ in a metric space $X$ is said to be a \navy{Cauchy Sequence} if for every $\e > 0$ there is an integer $N$ such that $d(p_n, p_m) < \e$ if $n \geq N$ and $m \geq N$.
+\end{definition}
+
+\begin{definition}[Diameter]
+Let $E$ be a nonempty subset of a metric space $X$, and let $S$ be the set of all real numbers of the form $d(p,q)$ with $p \in E$ and $q \in E$. The sup of $S$ is called the \navy{diameter} of $E$.
+\end{definition}
+
+\begin{definition}[Complete]
+A metric space in which every Cauchy sequence converges is \navy{complete}.
+\end{definition}
+
+\begin{definition}[Monotonically increasing, decreasing]
+A sequence $(s_n)$ of real numbers is said to be
+\begin{enumerate}
+\item \navy{Monotonically increasing} if $s_n \leq s_{n_1}$ for all $n$.
+\item \navy{Monotonically decreasing} if $s_n \geq s_{n_1}$ for all $n$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Convergent Series]
+Let $\sum_{n=1}^\infty a_n$ be an infinite series. Define $s_n = \sum_{k=1}^n a_n$ to be the $n$th partial sum of the series. If the sequence of partial sums $\Set{s_n}$ converges to $s$, we say the series $\navy{converges}$.
+\end{definition}
+
+\begin{definition}[Limit]
+Let $X$ and $Y$ be metric spaces, $E \subset X$, $f$ map $E$ into $Y$, and $p$ be a limit point of $E$. We write $f(x) \to q$ as $x \to p$ or $\navy{\lim_{x\to p} f(x) = q}$ if there is a point $q \in Y$ such that for every $\e > 0$ there exists a $\d > 0$ such that for all $x \in E$ for which $0 < d_X(x,p) < \d$, we have $d_Y(f(x),q) < \e$.
+\end{definition}
+
+\begin{definition}[Continuous]
+Suppose $X$ and $Y$ are metric spaces, $E \subset X$, $p \in E$, and $f$ maps $E$ into $Y$. Then $f$ is \navy{continuous} at $p$ if for every $\e > 0$ there there exists a $\d > 0$ such that for all $x \in E$ for which $d_X(x,p) < \d$, we have that $d_Y(f(x), f(p)) < \e$.
+\end{definition}
+
+\begin{definition}[Uniformly Continuous]
+Let $f$ be a mapping of a metric space $X$ into a metric space $Y$. We say that $f$ is \navy{uniformly continuous} on $X$ if for every $\e > 0$ there exists a $\d > 0$ such that for all $p,q \in X$ for which $d_X(p,q) < \delta$, we have $d_Y(f(p),f(q)) < \e$.
+\end{definition}
+
+\begin{definition}[Differentiable, Derivative]
+Let $f$ be defined (and real-valued) on $[a,b]$. For any $x \in [a,b]$ define
+\begin{equation}
+f'(x) = \lim_{t \to x} \frac{f(t) - f(x)}{t - x}
+\end{equation}
+provided this limit exists. If $f'$ is defined at a point $x$, we say that $f$ is \navy{differentiable} at $x$. $f'$ is called the \navy{derivative} of $f$.
+\end{definition}
+
+\end{document}
