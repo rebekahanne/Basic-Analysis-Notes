@@ -110,6 +110,7 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
+\newtheorem{claim}{\color{ForestGreen}{\textbf{Claim}}}[section]
 \newtheorem{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
 \newtheorem{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
 \newtheorem{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
@@ -177,6 +178,7 @@
 \newcommand{\ls}{\leqslant}
 \newcommand{\gs}{\geqslant}
 \def\ss{\subset}
+\def\sse{\subseteq}
 \def\nss{\not \ss}
 \def\sps{\supset}
 \def\pss{\subsetneq}
@@ -239,10 +241,10 @@
 \def\va{\vect{a}}
 \def\vb{\vect{b}}
 
-\newcommand{\CC}{\mathbbm C}
-\newcommand{\FF}{\mathbbm F}
-\newcommand{\RR}{\mathbbm R}
-\newcommand{\NN}{\mathbbm N}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
 \newcommand{\PP}{\mathbbm P}
 \newcommand{\EE}{\mathbbm E}
 \newcommand{\TT}{\mathbbm T}
@@ -739,7 +741,7 @@
 \begin{definition}[Sequentially compact]
 	A metric space $X$ is \navy{sequentially compact} if every sequence in $X$ has a convergent subsequence. 
 	\begin{remark}
-	This is also called the Bolzano-Weierstass property. 
+	This is also called the Bolzano-Weierstrass property. Recall that the Bolzano-Weierstrass theorem states that every bounded sequence in $\RR^n$ has a convergent subsequence. 
 	\end{remark}	
 \end{definition}
 
@@ -767,9 +769,122 @@
 	A metric space $X$ is \navy{totally bounded} if for every $\e > 0$ there exist finitely many balls of radius $\e$ that cover $X$. 
 \end{definition}
 
+\begin{claim}[Totally bounded implies bounded]
+	Let $X$ be a totally bounded metric space. Then it is bounded. 
+\end{claim}
+\begin{proof}[Proof 1]
+	Fix $\e > 0$. By total boundedness, there exist finitely (say $M$) many balls of radius $\e$ covering $X$. Fix a point $x_0 \in X$ and an arbitrary $y \in X$. First suppose $x_0$ and $y$ are in the same $\e$-ball. Then $d(x,y) < 2\e$. Next, suppose that $x_0$ and $y$ are in balls which intersect. Fix a point $z$ in the intersection. Then by the triangle inequality $d(x_0,y) \leq d(x_0,z) + d(z,y) < 4 \e$. In general, by repeated application of the triangle inequality, $d(x_0,y) \leq 2M \e$. In words, an upper bound on the distance between $x_0$ and $y$ is 2 times the number of balls (times their radius). Therefore, we have that $d(x_0,y) \leq 2M \e$ for all $x_0, y \in X$, so that $X \subseteq B(x_0, 2M\e)$. Therefore $X$ is bounded.  
+\end{proof}
+
+\textcolor{red}{Will there always be intersections???}
+
+\begin{proof}[Proof 2]
+	Fix $\e > 0$ and $x,y \in X$. Total boundedness implies there exists points $(x_i)_{i=1}^n$ such that $X \subseteq \bigcup_{i=1}^n B(x_i, \e)$. Suppose $x \in B(x_i,\e)$ and $y \in B(x_j,\e)$. Then 
+	\begin{equation}
+	 	d(x,y) \leq d(x,x_i) + d(x_i, x_j) + d(x_j,y) < d(x_i, x_j) + 2\e
+	 \end{equation} 
+	 There are only finitely many values of $d(x_i, x_j)$ we can set $M = \max_{i,j} d(x_i, x_j)$. Therefore $d(x,y) < M + 2\e$. Therefore $X$ is bounded. 
+\end{proof}
+
+
 \begin{example}[Closed and bounded interval in $\RR$ is totally bounded]
 	A closed and bounded interval $I = [a,b] \subset \RR$ is totally bounded. 
 \end{example}
+
+\begin{example}[Bounded but not totally bounded]
+	The following are examples of metric spaces which are bounded but not totally bounded.
+	\begin{enumerate}
+		\item $\ell^1$-space is defined to be the collection of all sequences $(a_n)_n$ with $\sum_{n=1}^\infty |a_n| < \infty$. We define a distance $d$ on $\ell^1$ as follows: $d\parens{(a_n)_n, (b_n)_n} = \sum_{n=1}^\infty |a_n - b_n|$. The unit ball of $\ell^1$ centered at the zero-element (call this call $B_1$) (i.e., the zero sequence) is bounded but not totally bounded. More precisely, 
+		\begin{equation}
+			B_1 = \Set{(a_n)_n; \sum_{n=1}^\infty |a_n| \leq 1}
+		\end{equation}
+		Boundedness is clear. Consider the the set of sequences $A = \Set{a_n}$ where each $a_n$ is zero except for a 1 in the $n$-th entry. Each $a_n \in B_1$. However, 
+		\begin{equation}
+			d(a_n,a_m) = 
+			\begin{cases}
+				2 & n \neq m \\
+				0 & n = m
+			\end{cases} 	
+		\end{equation} 
+		If we take balls of radius $\e = \frac{1}{2}$, then a ball can cover at most one sequence in $A$. Therefore we can't cover $A$ with finitely $\e$-balls and hence can't cover $B_1$ with finitely many $\e$-balls, so that $B_1$ is not totally bounded. 
+		\item $\ell^\infty$-space is defined to be the collection of all sequences $(a_n)_n$ with $\sup_n |a_n| < \infty$. We define a distance $d$ on $\ell^\infty$ as follows: $d\parens{(a_n)_n, (b_n)_n} = \sup_n \abs{a_n - b_n}$. Using the same set of sequences as the previous example, note that for all $n$ we have that
+		\begin{equation}
+		   	d\parens{a_n, \Set{0}_{n=1}^\infty} = 1
+		\end{equation}   
+		so that $A \ss B_1$ (with the sup norm). Further,
+		\begin{equation}
+			d(a_n,a_m) = 
+			\begin{cases}
+				1 & n \neq m \\
+				0 & n = m
+			\end{cases} 	
+		\end{equation}
+		But again, if we take balls of radius $\e = \frac{1}{2}$, then a ball can cover at most one sequence in $A$. Therefore we can't cover $A$ with finitely $\e$-balls and hence can't cover $B_1$ with finitely many $\e$-balls, so that $B_1$ is not totally bounded. 
+	\end{enumerate}
+\end{example}
+
+
+\begin{theorem}[Characterizations of compactness]
+	Let $X$ be a metric space. The following are equivalent:
+	\begin{enumerate}
+		\item $X$ is compact.
+		\item $X$ is sequentially compact.
+		\item $X$ is totally bounded and complete. 
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof of $X$ is compact $\imp$ $X$ is sequentially compact]
+	We argue by contradiction. Suppose $X$ is compact but not sequentially compact. Thus there must exist some sequence $(x_n)_n \ss X$ without a convergence subsequence. Let $A$ be the range of the sequence (more explicitly, $A = \Set{x_n; n \in \NN}$). Note that $A$ has to be an infinite (if $A$ were finite, then there would be a constant subsequence, which is convergent). 
+
+	Further, $A$ cannot have any limit points (by definition, a point is a limit point of a sequence if there exists a subsequence converging to it). Therefore for each $x_n$, we can find an open ball centered at $x_n$ that only intersects $A$ at $x_n$: $B_n \cap A = \Set{x_n}$. $A$ is also closed (since it has no limit points), so that $X-A$ is open. We can construct an open cover of $X$ as:
+	\begin{equation}
+		X \subseteq \bigcup_{n} B_n \cup \Set{X-A}
+	\end{equation}
+	Compactness of $A$ implies this open cover has a finite subcover. Therefore the finite subcover can only contain finitely many of the sets in $\bigcup_{n} B_n$, so can only contain finitely many of the points in $A$, which is a contradiction to the covering. 
+\end{proof}
+
+\begin{proof}[Proof of $X$ is sequentially compact $\imp$ $X$ is totally bounded and complete]
+	Suppose $X$ is sequentially compact. 
+
+	\textbf{Complete}: Fix $\e > 0$. Let $(x_n)_n \ss X$ be a Cauchy sequence. Sequential compactness implies $(x_n)_n$ has a convergent subsequence. Call this subsequence $(x_{n_k})$ and its limit $x$. Then there exists an $N$ such that $d(x_{n_k},x) < \e$ for all $n_k \geq N$. Since $(x_n)_n$ is Cauchy, there exists an $N$ such that $n,m \geq M$ implies that $d(x_n,x_m) < \e$. But then
+	\begin{equation}
+		d(x_n,x) \leq d(x_n, x_{n_k}) + d(x_{n_k}, x) < 2\e
+	\end{equation}
+	for all $n, n_k \geq \max\{N,M\}$. Therefore $(x_n)_n$ converges, so $X$ is complete. \textbf{In words, Cauchy sequences with convergence subsequences also converge.} 
+
+	\textbf{Totally Bounded:} We argue by contradiction. Suppose $X$ is not totally bounded. Then there exists an $\e > 0$ such that $X$ cannot be covered by finitely many balls of radius $\e$. We know that 1 ball of radius $\e$ cannot cover $X$. Therefore there must be a point of $X$ outside of this ball: call it $x_1$. Similarly, 2 balls of radius $\e$ cannot cover $X$, so pick a point outside of these two balls and call it $x_2$. Proceeding in this manner generates an infinite sequence. Now consider the $n$-th term of this sequence. When we choose $n+1$, we must be able to choose a point such that $d(x_i, x_{n+1}) \geq \e$ for all $i \in \intsfin{n}$. Otherwise, we would have that $X \subseteq \bigcup_{i=1}^n B(x_i,\e)$, which would be a contradiction to $X$ not being totally bounded. Thus we can construct such a sequence. 
+
+	Next, since $X$ is sequentially compact, we must be able to find a convergence subsequence. However, the sequence we've constructed has $d(x_i, x_j) \geq \e$ for all $i,j \in \NN$ (hence no subsequence can be Cauchy, and we know that convergence sequences are Cauchy). Therefore we have reached a contradiction and it holds that $X$ is totally bounded. 
+\end{proof}
+
+\begin{proof}[Proof of $X$ is totally bounded and complete $\imp$ $X$ is sequentially compact]
+	Suppose $X$ is totally bounded and complete. Let $(x_n)_n \ss X$ be a sequence. \textbf{We will construct an convergent subsequence.} By the definition of total boundedness, for all $\e > 0$, $X$ can be covered by finitely many balls of radius $\e$. \textbf{Observation:} One of these balls must contain infinitely many points of $(x_n)_n$. This inspires the following process: 
+	\begin{enumerate}
+		\item \textbf{Step 1:} Cover $X$ with balls of radius 1. One of these balls must contain infinitely many points of $(x_n)_n$. These infinitely many points form a subsequence, call it $(x^{(0)}_n)_n$. 
+		\item \textbf{Step 2:} Cover $X$ with balls of radius $\frac{1}{2}$. One of these balls must contain infinitely many points of $(x^{(0)}_n)_n$. These infinitely many points form a subsequence, call it $(x^{(1)}_n)_n$. 
+		\item \textbf{Step $\bm n$:} Cover $X$ with balls of radius $\frac{1}{2^n}$. One of these balls must contain infinitely many points of $(x^{(n-1)}_n)_n$. These infinitely many points form a subsequence, call it $(x^{(n)}_n)_n$.
+	\end{enumerate}
+	Therefore we have founded nested sequences: $(x^{(0)}_n)_n \ss (x^{(1)}_n)_n \ss \cdots \ss (x^{(n-1)}_n)_n \cdots$. Set $a_n = x^{(n)}_n$ (which is a subsequence of $(x_n)_n$). 
+
+	\textbf{Now we show that $a_n$ is a Cauchy sequence.} Fix $\e > 0$ and choose $N$ such that $2^{-N + 1} < \e$. Now for $m > n \geq N$ we have that
+	\begin{equation}
+		d(a_m, a_n) < 2 \cdot 2^{-n} < 2^{-N + 1} < \e
+	\end{equation}
+	since $a_m$ and $a_n$ are contained in the same ball of radius $2^{-n}$. Therefore $(a_n)_n$ is a Cauchy sequence, and completeness implies it converges. 
+
+	\textbf{We have found a convergence subsequence, so $X$ is sequentially compact.} 
+
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=.55]{totally_bounded_complete_compact.png}
+		\end{center}
+	\end{figure}
+
+\end{proof}
+
+
+
+\newpage
 
 
 

@@ -2,7 +2,7 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/01/30,23:49
+%% Generated on :  2019/02/05,19:44
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
@@ -105,6 +105,7 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
+\newtheorem{claim}{\color{ForestGreen}{\textbf{Claim}}}[section]
 \newtheorem{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
 \newtheorem{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
 \newtheorem{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
@@ -172,6 +173,7 @@
 \newcommand{\ls}{\leqslant}
 \newcommand{\gs}{\geqslant}
 \def\ss{\subset}
+\def\sse{\subseteq}
 \def\nss{\not \ss}
 \def\sps{\supset}
 \def\pss{\subsetneq}
@@ -234,10 +236,10 @@
 \def\va{\vect{a}}
 \def\vb{\vect{b}}
 
-\newcommand{\CC}{\mathbbm C}
-\newcommand{\FF}{\mathbbm F}
-\newcommand{\RR}{\mathbbm R}
-\newcommand{\NN}{\mathbbm N}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
 \newcommand{\PP}{\mathbbm P}
 \newcommand{\EE}{\mathbbm E}
 \newcommand{\TT}{\mathbbm T}
@@ -408,7 +410,7 @@ A subset $A \ss X$ is called \navy{relatively compact} or \navy{precompact} if t
 \begin{definition}[Sequentially compact]
 A metric space $X$ is \navy{sequentially compact} if every sequence in $X$ has a convergent subsequence.
 \begin{remark}
-This is also called the Bolzano-Weierstass property.
+This is also called the Bolzano-Weierstrass property. Recall that the Bolzano-Weierstrass theorem states that every bounded sequence in $\RR^n$ has a convergent subsequence.
 \end{remark}
 \end{definition}
 
