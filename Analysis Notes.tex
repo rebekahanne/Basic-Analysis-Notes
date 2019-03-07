@@ -772,13 +772,7 @@
 \begin{claim}[Totally bounded implies bounded]
 	Let $X$ be a totally bounded metric space. Then it is bounded. 
 \end{claim}
-\begin{proof}[Proof 1]
-	Fix $\e > 0$. By total boundedness, there exist finitely (say $M$) many balls of radius $\e$ covering $X$. Fix a point $x_0 \in X$ and an arbitrary $y \in X$. First suppose $x_0$ and $y$ are in the same $\e$-ball. Then $d(x,y) < 2\e$. Next, suppose that $x_0$ and $y$ are in balls which intersect. Fix a point $z$ in the intersection. Then by the triangle inequality $d(x_0,y) \leq d(x_0,z) + d(z,y) < 4 \e$. In general, by repeated application of the triangle inequality, $d(x_0,y) \leq 2M \e$. In words, an upper bound on the distance between $x_0$ and $y$ is 2 times the number of balls (times their radius). Therefore, we have that $d(x_0,y) \leq 2M \e$ for all $x_0, y \in X$, so that $X \subseteq B(x_0, 2M\e)$. Therefore $X$ is bounded.  
-\end{proof}
-
-\textcolor{red}{Will there always be intersections???}
-
-\begin{proof}[Proof 2]
+\begin{proof}
 	Fix $\e > 0$ and $x,y \in X$. Total boundedness implies there exists points $(x_i)_{i=1}^n$ such that $X \subseteq \bigcup_{i=1}^n B(x_i, \e)$. Suppose $x \in B(x_i,\e)$ and $y \in B(x_j,\e)$. Then 
 	\begin{equation}
 	 	d(x,y) \leq d(x,x_i) + d(x_i, x_j) + d(x_j,y) < d(x_i, x_j) + 2\e
@@ -882,7 +876,9 @@
 
 \end{proof}
 
+\subsection{Equicontinuity and the Arzela-Ascoli Theorem}
 
+[[To prove relatively compact, we construct a sequence of functions that converges uniformly.]]
 
 \newpage
 
