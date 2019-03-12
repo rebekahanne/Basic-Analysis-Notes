@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 
 % Extract
 \usepackage[active,
@@ -76,6 +76,16 @@
 
 % Equation numbering
 \numberwithin{equation}{section}
+
+% Use more than one optional parameter in a new commands
+\usepackage{xargs}                      
+% Todo
+\usepackage[colorinlistoftodos,prependcaption,textsize=normalsize]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -264,7 +274,6 @@
 \newcommand{\YY}{\mathsf Y}
 \newcommand{\ZZZ}{\mathsf Z}
 
-\newcommand{\aA}{\mathscr A}
 \newcommand{\cC}{\mathscr C}
 \newcommand{\iI}{\mathscr I}
 \newcommand{\eE}{\mathscr E}
@@ -274,6 +283,7 @@
 \newcommand{\lL}{\mathscr L}
 \newcommand{\cG}{\mathscr G}
 
+\newcommand{\aA}{\mathcal A}
 \newcommand{\pP}{\mathcal P}
 \newcommand{\vV}{\mathcal V}
 \newcommand{\dD}{\mathcal D}
@@ -882,10 +892,177 @@
 
 \newpage
 
-
-
 \section{Approximation Theory and Fourier Series}
 
+
+\subsection{Trigonometric Polynomials}
+
+\begin{definition}[Trigonometric Polynomial, Degree]
+	A \navy{trigonometric polynomial} is a function of the form
+	\begin{equation}
+		f(x) = \sum_{n=-N}^N c_n e^{2\pi i n x} \quad x \in \RR
+	\end{equation}
+	where $N \in \NN$ and $c_n \in \CC$. The largest $N$ for which either $c_N$ or $c_{-N}$ is non-zero is called the \navy{degree} of $f$. 
+\end{definition}
+
+
+\begin{claim}[Alternative form of trigonometric polynomial]
+	Every trigonometric polynomial can also be written in the form
+	\begin{equation}
+		f(x) = a_0 + \sum_{n=1}^N a_n \cos(2\pi n x) + b_n \sin(2\pi nx)
+	\end{equation}
+	for coefficients $a_n, b_n$. 
+\end{claim}
+\begin{proof}
+	Using Euler's identity, recall that
+	\begin{equation}
+		e^{2\pi i n x} = \cos(2\pi i n x) + i \sin(2\pi i n x)
+	\end{equation}
+	Then, for $x \in \RR$,
+	\begin{align*}
+		f(x) &= \sum_{n=-N}^N c_n e^{2\pi i n x} \\
+		&= \sum_{n=-N}^N \squares{\cos(2\pi i n x) + i \sin(2\pi i n x)} \\
+		&= c_0 + \sum_{n=1}^N \squares{c_n(\cos(2\pi i n x) + i \sin(2\pi i n x)) + c_{-n}(\cos(2\pi i (-n) x) + i \sin(2\pi i (-n x))} \\
+		&= c_0 + \sum_{n=1}^N \squares{(c_n + c_{-n})\cos(2\pi i n x) + i(c_n - c_{-n})\sin(2\pi i n x)}
+	\end{align*}
+	Therefore the claim alternative holds for ($1 \leq n \leq N$)
+	\begin{align*}
+		a_0 &= c_0 \\
+		a_n &= c_n + c_{-n} \\
+		b_n &= i(c_n - c_{-n})
+	\end{align*}
+	
+\end{proof}
+
+\begin{definition}[Approximation of Unity]
+	A sequence of 1-periodic continuous functions $(k_n)_n$ is called \navy{approximation of unity} if for all 1-periodic continuous functions $f$ we have that $f * k_n$ converges uniformly to $f$ on $\RR$. That is
+	\begin{equation}
+		\sup_{x \in \RR} \abs{f * k_n(x) - f(x)} \to 0
+	\end{equation}
+	as $n \to \infty$
+\end{definition}
+
+\begin{theorem}[Sufficient conditions for approximation of unity]
+	Let $(k_n)_n$ be a sequence of 1-periodic continuous functions such that
+	\begin{enumerate}
+		\item Non-negative: $k_n(x) \geq 0$.
+		\item Integrates to 1: $\int_{-1/2}^{1/2} k_n(t) dt = 1$.
+		\item ``Mass'' of $k_n$ concentrated near the origin: For all $1/2 \geq \d > 0$ we have
+		\begin{equation}
+			\int_{-\d}^\d k_n(t) dt \to 1 \text{ as } n \to \infty
+		\end{equation}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Let $f$ be a function that is 1-periodic and continuous. \textbf{What can we say about $f$?} \textbf{Using continuity:} Consider the interval $[-1/2,1/2]$. $f$ is continuous on this compact set so that  on $[-1/2,1/2]$ it is
+	\begin{enumerate}
+		\item Bounded
+		\item Uniformly continuous
+	\end{enumerate}
+	\textbf{Using periodicity:} by periodicity, on all of $\RR$, $f$ is 
+	\begin{enumerate}
+		\item Bounded
+		\item Uniformly continuous
+	\end{enumerate}
+	Thus there exists a $\d > 0$ such that
+	\begin{equation}
+		\abs{f(x-t)-f(x)} \leq \e/2 \text{ for all } |t| < \d, x \in \RR
+	\end{equation}
+	Then we can write 
+	\begin{equation}
+		f * k_n(x) - f(x) = \int_{-1/2}^{1/2} \parens{f(x-t) - f(x)} k_n(t) dt 
+	\end{equation}
+	Let's break this integral up into two pieces:
+	\begin{align*}
+		A &= \int_{|t| \leq \d } \parens{f(x-t) - f(x)} k_n(t) dt \\
+		B &= \int_{1/2 \geq \d > 0} \parens{f(x-t) - f(x)} k_n(t) dt \\
+	\end{align*}
+	To bound $A$, we use uniform continuity and (ii):
+	\begin{align*}
+		|A| &= \abs{\int_{|t| \leq \d } \parens{f(x-t) - f(x)} k_n(t) dt}
+	\end{align*}
+	
+	\improvement[inline]{Incomplete.}
+\end{proof} 
+
+\begin{corollary}[Fej\'er kernel an approximation of unity]
+
+\end{corollary}
+\begin{proof}
+	We must verify the hypotheses of the above theorem. 
+
+	\improvement[inline]{Incomplete.}
+\end{proof}
+
+\begin{theorem}[Partial sum convoluted with 1-periodic, continuous function converges in 2-norm]
+	Let $f$ be a 1-periodic and continuous function. Then
+	\begin{equation}
+		\lim_{N \to \infty} \norm{S_N f - f}_2 = 0
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let $\e > 0$. 
+
+	\improvement[inline]{Incomplete.}
+\end{proof}
+
+
+\subsection{Weierstrass Theorem}
+
+\begin{theorem}[Weierstrass Theorem]
+	For every $f \in C([a,b])$ there exists a sequence of polynomials that converges uniformly to $f$. 
+\end{theorem}
+\begin{proof}
+	Let $\e > 0$. 
+
+	\improvement[inline]{Incomplete.}
+\end{proof}
+
+
+\begin{remark}
+	This shows that polynomials are dense in $C([a,b])$. 
+\end{remark}
+
+
+\subsection{Stone-Weierstrass Theorem}
+
+\begin{theorem}[Stone-Weierstrass Theorem (Sufficient conditions for a subset of $C(K)$, $K$ compact, to be dense)]\label{thm:stone-weierstrass}
+	Suppose 
+	\begin{itemize}
+		\item $K$ is a compact metric space.
+		\item $\aA \ss C(K)$ such that
+		\begin{enumerate}
+			\item $\aA$ is a self-adjoint algebra: for $f,g \in \aA$, $c \in \CC$, we have
+			\begin{equation}
+				f+g \in \aA, f \cdot g \in \aA, c \cdot f \in \aA, \bar{f} \in \aA
+			\end{equation}
+			\item $\aA$ separates points: for all $x,y \in K$ with $x \neq y$, there exists $f \in \aA$ such that $f(x) \neq f(y)$. 
+			\item $\aA$ vanishes nowhere: for all $x \in K$, there exists $f \in \aA$ such that $f(x) \neq 0$. 
+		\end{enumerate}
+	\end{itemize}
+	\textbf{Then} $\aA$ is dense in $C(K)$ (that is, $\bar{\aA} = C(K)$). 
+\end{theorem}
+
+\begin{remark}
+	Polynomials and trigonometric polynomials satisfy the conditions of the Stone-Weierstrass Theorem (Theorem \ref{thm:stone-weierstrass}).
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 \section{Linear Operators and Derivatives}
 
 \section[Differential Calculus in Rn]{Differential Calculus in $\RR^n$}

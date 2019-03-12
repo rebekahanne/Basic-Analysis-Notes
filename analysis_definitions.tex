@@ -2,11 +2,11 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/02/13,14:42
+%% Generated on :  2019/03/12,12:17
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -71,6 +71,16 @@
 
 % Equation numbering
 \numberwithin{equation}{section}
+
+% Use more than one optional parameter in a new commands
+\usepackage{xargs}
+% Todo
+\usepackage[colorinlistoftodos,prependcaption,textsize=normalsize]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -259,7 +269,6 @@
 \newcommand{\YY}{\mathsf Y}
 \newcommand{\ZZZ}{\mathsf Z}
 
-\newcommand{\aA}{\mathscr A}
 \newcommand{\cC}{\mathscr C}
 \newcommand{\iI}{\mathscr I}
 \newcommand{\eE}{\mathscr E}
@@ -269,6 +278,7 @@
 \newcommand{\lL}{\mathscr L}
 \newcommand{\cG}{\mathscr G}
 
+\newcommand{\aA}{\mathcal A}
 \newcommand{\pP}{\mathcal P}
 \newcommand{\vV}{\mathcal V}
 \newcommand{\dD}{\mathcal D}
@@ -420,6 +430,22 @@ A metric space $X$ is \navy{bounded} if it fits in a single fixed ball. More pre
 
 \begin{definition}[Totally bounded]
 A metric space $X$ is \navy{totally bounded} if for every $\e > 0$ there exist finitely many balls of radius $\e$ that cover $X$.
+\end{definition}
+
+\begin{definition}[Trigonometric Polynomial, Degree]
+A \navy{trigonometric polynomial} is a function of the form
+\begin{equation}
+f(x) = \sum_{n=-N}^N c_n e^{2\pi i n x} \quad x \in \RR
+\end{equation}
+where $N \in \NN$ and $c_n \in \CC$. The largest $N$ for which either $c_N$ or $c_{-N}$ is non-zero is called the \navy{degree} of $f$.
+\end{definition}
+
+\begin{definition}[Approximation of Unity]
+A sequence of 1-periodic continuous functions $(k_n)_n$ is called \navy{approximation of unity} if for all 1-periodic continuous functions $f$ we have that $f * k_n$ converges uniformly to $f$ on $\RR$. That is
+\begin{equation}
+\sup_{x \in \RR} \abs{f * k_n(x) - f(x)} \to 0
+\end{equation}
+as $n \to \infty$
 \end{definition}
 
 \begin{definition}[Supremum, Infimum]
