@@ -894,6 +894,34 @@
 
 \section{Approximation Theory and Fourier Series}
 
+\subsection{Orthonormal Systems}
+
+\begin{theorem}[Best $L^2$-approximation]
+	
+\end{theorem}
+
+
+\begin{theorem}[Bessel's Inequality]
+	If $(\phi_n)_n$ is an orthonormal system on $[a,b]$ and $f \in pc([a,b])$, then
+	\begin{equation}
+		\sum_{n=1}^\infty \abs{\angles{f,\phi_n}}^2 \leq \norm{f}^2_2
+	\end{equation}
+\end{theorem}
+
+\begin{corollary}[Riemann-Lebesgue Lemma]
+	Let $(\phi_n)_n$ is an orthonormal system and $f \in pc([a,b])$, then
+	\begin{equation}
+		\lim_{n\to\infty} \angles{f,\phi_n} = 0
+	\end{equation}
+\end{corollary}
+
+\begin{definition}[Complete Orthonormal System]
+	An orthonormal system $(\phi_n)_n$ is called \navy{complete} if 
+	\begin{equation}
+		\sum_{n=1}^\infty \abs{\angles{f,\phi_n}}^2 = \norm{f}^2_2 \quad \forall f \in pc([a,b])
+	\end{equation}
+\end{definition}
+
 
 \subsection{Trigonometric Polynomials}
 
@@ -985,6 +1013,20 @@
 	\improvement[inline]{Incomplete.}
 \end{proof} 
 
+\begin{theorem}[Fej\'er]
+	For every 1-periodic, continuous function $f$ we have
+	\begin{equation}
+		\sigma_N f \to f \text{ as } N \to \infty
+	\end{equation}
+	uniformly on $\RR$. 
+\end{theorem}
+
+\begin{corollary}
+	Every 1-periodic continuous function can be uniformly approximated by trigonometric polynomials. 
+\end{corollary}
+
+
+
 \begin{corollary}[Fej\'er kernel an approximation of unity]
 
 \end{corollary}
@@ -1005,6 +1047,17 @@
 
 	\improvement[inline]{Incomplete.}
 \end{proof}
+
+\begin{corollary}[Parseval's Theorem]
+
+\end{corollary}
+
+\begin{theorem}[]
+	Let $f$ be a 1-periodic continuous function and let $x \in \RR$. Suppose $f$ is differentiable at $x$. Then 
+	\begin{equation}
+		S_N f(x) \to f(x) \text{ as } N \to \infty
+	\end{equation}
+\end{theorem}
 
 
 \subsection{Weierstrass Theorem}
@@ -1045,10 +1098,30 @@
 
 \begin{remark}
 	Polynomials and trigonometric polynomials satisfy the conditions of the Stone-Weierstrass Theorem (Theorem \ref{thm:stone-weierstrass}).
+
+	\improvement[inline]{Show this.}
 \end{remark}
 
+We prove a sequence of lemmas before proving the theorem. 
 
+\begin{lemma}[Sequence of polynomials uniformly converging to absolute value function]
+	For every $a > 0$ there exists a sequence of polynomials $(p_n)_n$ with real coefficients such that $p_n(0) = 0$ $\forall n$ and
+	\begin{equation}
+		\sup_{x \in [-a,a]}\abs{p_n(x) - \abs{x}} \to 0 \text{ as } n \to \infty
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	$f(x) = \abs{x}$ is a continuous function on $[-a,a]$. By Weierstrass' theorem, there exists a sequence of polynomials $(q_n)_n$ converging uniformly to $f(x) = \abs{x}$ on $[-a,a]$. Now set $p_n(x) = q_n(x) - q_n(0)$. It is clear that $p_n(0) = 0$. Further, $p_n(x)$ converges uniformly to $|x|$, since $q_n(x)$ uniformly converges to $|x|$ and $q_n(0)$ converges to 0. 
 
+	More formally: fix $\e > 0$. Then $\exists N$ such that $|q_n(x) - |x|| < \e$ for all $n>N$ and $x \in [-a,a]$. Thus, for this $N$, $|q_n(0)|< \frac{\e}{2}$ and $|q_n(x)| < \frac{\e}{2}$ for all $x \neq 0$. Therefore
+	\begin{equation}
+		|p_n(x)| = |q_n(x) - q_n(0)| \leq |q_n(x)| + |q_n(0)| < \frac{\e}{2} + \frac{\e}{2} = \e
+	\end{equation}
+\end{proof}
+
+\begin{lemma}[]
+	If $f \in \bar{A}$, then $|f| \in \bar{A}$.
+\end{lemma}
 
 
 

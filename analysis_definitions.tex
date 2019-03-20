@@ -2,7 +2,7 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/03/12,12:17
+%% Generated on :  2019/03/17,19:37
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
@@ -430,6 +430,13 @@ A metric space $X$ is \navy{bounded} if it fits in a single fixed ball. More pre
 
 \begin{definition}[Totally bounded]
 A metric space $X$ is \navy{totally bounded} if for every $\e > 0$ there exist finitely many balls of radius $\e$ that cover $X$.
+\end{definition}
+
+\begin{definition}[Complete Orthonormal System]
+An orthonormal system $(\phi_n)_n$ is called \navy{complete} if
+\begin{equation}
+\sum_{n=1}^\infty \abs{\angles{f,\phi_n}}^2 = \norm{f}^2_2 \quad \forall f \in pc([a,b])
+\end{equation}
 \end{definition}
 
 \begin{definition}[Trigonometric Polynomial, Degree]
