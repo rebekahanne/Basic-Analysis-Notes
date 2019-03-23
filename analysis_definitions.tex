@@ -2,7 +2,7 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/03/17,19:37
+%% Generated on :  2019/03/22,23:15
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
@@ -366,14 +366,6 @@ To a power series we can associate a number $R \in [0, \infty]$ (thus $R$ is an 
 \end{enumerate}
 \end{definition}
 
-\begin{definition}[Equicontinuous]
-A family $\fF$ of complex functions $f$ defined on a set $E$ in a metric space $X$ is said to be \navy{equicontinuous} on $E$ if for every $\e > 0$ there exists a $\d > 0$ such that
-\begin{equation*}
-|f(x) - f(y)| < \e
-\end{equation*}
-whenever $d(x,y) < \d$, $x \in E$, $y \in E$, and $f \in \fF$. (Notice: every member of an equicontinuous family is uniformly continuous)
-\end{definition}
-
 \begin{definition}[Open, open relative to]
 Let $E \subset U \subset X$, where $X$ is a metric space.
 \begin{enumerate}
@@ -445,6 +437,20 @@ A \navy{trigonometric polynomial} is a function of the form
 f(x) = \sum_{n=-N}^N c_n e^{2\pi i n x} \quad x \in \RR
 \end{equation}
 where $N \in \NN$ and $c_n \in \CC$. The largest $N$ for which either $c_N$ or $c_{-N}$ is non-zero is called the \navy{degree} of $f$.
+\end{definition}
+
+\begin{definition}[Partial sums]
+For a 1-periodic function $f \in \text{pc}$ we define the \navy{partial sums}
+\begin{equation}
+S_Nf(x) = \sum_{n=-N}^N \hat{f}(n) e^{2\pi i nx}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Convolution]
+For two 1-periodic functions $f,g \in \text{pc}$ we define their \navy{convolution} by
+\begin{equation}
+f * g(x) = \int_0^1 f(t)g(x-t)dt
+\end{equation}
 \end{definition}
 
 \begin{definition}[Approximation of Unity]

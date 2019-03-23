@@ -478,20 +478,6 @@
 	We use summation by parts. Set $s_n = \sum_{k=0}^n c_k$ and by convention assume $s_{-1} = 0$. 
 \end{proof}
 
-
-
-\subsection{?}
-
-\begin{definition}[Equicontinuous]
-	A family $\fF$ of complex functions $f$ defined on a set $E$ in a metric space $X$ is said to be \navy{equicontinuous} on $E$ if for every $\e > 0$ there exists a $\d > 0$ such that
-	\begin{equation*}
-		|f(x) - f(y)| < \e
-	\end{equation*}
-	whenever $d(x,y) < \d$, $x \in E$, $y \in E$, and $f \in \fF$. (Notice: every member of an equicontinuous family is uniformly continuous)
-\end{definition}
-
-
-
 \section{Compactness in Metric Spaces}
 
 \subsection{Review of Basic Topology}
@@ -962,6 +948,21 @@
 	
 \end{proof}
 
+\begin{definition}[Partial sums]
+	For a 1-periodic function $f \in \text{pc}$ we define the \navy{partial sums} 
+	\begin{equation}
+		S_Nf(x) = \sum_{n=-N}^N \hat{f}(n) e^{2\pi i nx}
+	\end{equation}
+\end{definition}
+
+\begin{definition}[Convolution]
+	For two 1-periodic functions $f,g \in \text{pc}$ we define their \navy{convolution} by
+	\begin{equation}
+		f * g(x) = \int_0^1 f(t)g(x-t)dt
+	\end{equation}
+\end{definition}
+
+
 \begin{definition}[Approximation of Unity]
 	A sequence of 1-periodic continuous functions $(k_n)_n$ is called \navy{approximation of unity} if for all 1-periodic continuous functions $f$ we have that $f * k_n$ converges uniformly to $f$ on $\RR$. That is
 	\begin{equation}
@@ -1019,11 +1020,16 @@
 		\sigma_N f \to f \text{ as } N \to \infty
 	\end{equation}
 	uniformly on $\RR$. 
+
+	In words, the sequence $\sigma_n$ of Ces\'aro means of the sequence $(s_n)$ of partial sums of the Fourier series of $f$ converges uniformly to $f$ on $[0,1]$.
 \end{theorem}
 
 \begin{corollary}
 	Every 1-periodic continuous function can be uniformly approximated by trigonometric polynomials. 
 \end{corollary}
+\begin{proof}
+	
+\end{proof}
 
 
 
@@ -1049,13 +1055,20 @@
 \end{proof}
 
 \begin{corollary}[Parseval's Theorem]
-
+	If $f,g$ are 1-periodic, continuous functions, then
+	\begin{equation}
+		\angles{f,g} = \sum_{n=-\infty}^\infty \hat{f}(n) \overline{\hat{g}(n)}
+	\end{equation}
 \end{corollary}
 
 \begin{theorem}[]
 	Let $f$ be a 1-periodic continuous function and let $x \in \RR$. Suppose $f$ is differentiable at $x$. Then 
 	\begin{equation}
 		S_N f(x) \to f(x) \text{ as } N \to \infty
+	\end{equation}
+	As a special case
+	\begin{equation}
+		\norm{f}^2_2 = \sum_{n=-\infty}^\infty \abs{\hat{f}(n)}^2
 	\end{equation}
 \end{theorem}
 
