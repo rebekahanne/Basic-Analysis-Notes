@@ -87,6 +87,9 @@
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
+% Framed theorems
+\usepackage{mdframed}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Document Settings
@@ -118,12 +121,17 @@
 
 % Environments
 
-\theoremstyle{plain}
-\newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
+\theoremstyle{definition}
+\newmdtheoremenv{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
+% \newtheorem{theorem}{\color{ForestGreen}{\textbf{Theorem}}}[section]
 \newtheorem{claim}{\color{ForestGreen}{\textbf{Claim}}}[section]
-\newtheorem{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
-\newtheorem{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
-\newtheorem{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
+% \newtheorem{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
+% \newtheorem{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
+% \newtheorem{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
+\newmdtheoremenv{lemma}[theorem]{\color{ForestGreen}{\textbf{Lemma}}}
+\newmdtheoremenv{proposition}[theorem]{\color{ForestGreen}{\textbf{Proposition}}}
+\newmdtheoremenv{corollary}[theorem]{\color{ForestGreen}{\textbf{Corollary}}}
+
 \newtheorem{axiom}[theorem]{\color{ForestGreen}{\textbf{Axiom}}}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{case}[theorem]{Case}
@@ -133,7 +141,8 @@
 \newtheorem{problem}[theorem]{Problem}
 
 \theoremstyle{definition}
-\newtheorem{definition}{\color{MidnightBlue}{\textbf{Definition}}}[section]
+% \newtheorem{definition}{\color{MidnightBlue}{\textbf{Definition}}}[section]
+\newmdtheoremenv{definition}{\color{MidnightBlue}{\textbf{Definition}}}[section]
 \newtheorem{example}{\color{WildStrawberry}Example}[section]
 \newtheorem{assumption}{Assumption}[section]
 \newtheorem{condition}[assumption]{Condition}
@@ -883,23 +892,111 @@
 \subsection{Orthonormal Systems}
 
 \begin{theorem}[Best $L^2$-approximation]
-	
+	Let
+	\begin{itemize}
+		\item $(\phi_n)_n$ be an orthonormal system 
+		\item $f \in pc([a,b])$
+		\item $c_n = \angles{f,\phi_n}$
+	\end{itemize}
+	Define
+	\begin{itemize}
+		\item $s_N(x) = \sum_{n=1}^N c_n \phi_n(x)$
+		\item $t_N(x) = \sum_{n=1}^N b_n \phi_n(x)$ for arbitrary coefficients $b_1,\ldots,b_N \in \CC$
+	\end{itemize}
+	Then
+	\begin{equation}
+		\norm{f - s_N}_2 \leq \norm{f - t_N}_2
+	\end{equation}
+	and equality holds iff $b_n = c_n$ for all $n=1,\ldots,N$.
 \end{theorem}
 
+\begin{proof}
+We compute the following elements:
+\begin{align*}
+	\angles{f,t_N} = \sum_{n=1}^N \overline{b}_n \angles{f,\phi_n} = \sum_{n=1}^N \overline{b}_n c_n
+\end{align*}
+
+\begin{align*}
+	\angles{f,s_N} = \sum_{n=1}^N \overline{c}_n \angles{f,\phi_n} = \sum_{n=1}^N \overline{c}_n c_n = \sum_{n=1}^N \abs{c_n}^2
+\end{align*}
+
+
+\begin{align*}
+	\angles{t_N,t_N} &= \angles{\sum_{n=1}^N b_n\phi_n, \sum_{m=1}^N b_m \phi_m} \\
+	&= \sum_{n=1}^N \sum_{m=1}^N b_n \overline{b}_m \angles{\phi_n, \phi_m} \\
+	&= \sum_{n=1}^N \abs{b_n}^2 \tag{$(\phi_n)_n$ orthonormal}
+\end{align*}
+
+Then
+\begin{align*}
+	\norm{f-t_N}^2_2 &= \angles{f-t_N,f-t_N} \\
+	&= \angles{f,f} - \angles{f,t_N} - \angles{t_N,f} + \angles{t_N,t_N} \\
+	&= \angles{f,f} - \sum_{n=1}^N \overline{b}_n c_n - \sum_{n=1}^N b_n \overline{c}_n + \sum_{n=1}^N \abs{b_n}^2 \\
+\end{align*}
+
+\begin{align*}
+	\abs{b_n - c_n}^2 &= (b_n - c_n)(\overline{b_n - c_n}) \\
+	&= (b_n - c_n)(\overline{b_n} - \overline{c_n}) \\
+	&= b_n \overline{b_n} - b_n \overline{c_n} - c_n \overline{b_n} + c_n \overline{c_n} \\
+	&= \abs{b_n}^2 - b_n \overline{c_n} - c_n \overline{b_n} + \abs{c_n}^2
+\end{align*}
+
+Therefore
+\begin{align*}
+	\norm{f-t_N}^2_2 &= \angles{f,f} - \sum_{n=1}^N \overline{b}_n c_n - \sum_{n=1}^N b_n \overline{c}_n + \sum_{n=1}^N \abs{b_n}^2 \\
+	&= \angles{f,f} + \sum_{n=1}^N \abs{b_n - c_n}^2 - \sum_{n=1}^N \abs{c_n}^2 
+\end{align*}
+
+And
+\begin{align*}
+	\norm{f-s_N}^2_2 &= \angles{f-s_N,f-s_N} \\
+	&= \angles{f,f} - \angles{f,s_N} - \angles{s_N,f} + \angles{s_N,s_N} \\
+	&= \angles{f,f} - 2 \sum_{n=1}^N \abs{c_n}^2 + \sum_{n=1}^N \abs{c_n}^2 \\
+	&= \angles{f,f} - \sum_{n=1}^N \abs{c_n}^2
+\end{align*}
+
+Finally
+\begin{align*}
+	\norm{f-t_N}^2_2 = \norm{f-s_N}^2_2 + \sum_{n=1}^N \abs{b_n - c_n}^2
+\end{align*}
+Thus the claim follows. Indeed, for equality to be achieved, we must have that $b_n = c_n$ for $n=1,\ldots,N$. 
+
+\end{proof}
 
 \begin{theorem}[Bessel's Inequality]
 	If $(\phi_n)_n$ is an orthonormal system on $[a,b]$ and $f \in pc([a,b])$, then
 	\begin{equation}
-		\sum_{n=1}^\infty \abs{\angles{f,\phi_n}}^2 \leq \norm{f}^2_2
+		\sum_{n} \abs{\angles{f,\phi_n}}^2 \leq \norm{f}^2_2
 	\end{equation}
 \end{theorem}
 
+\begin{proof}
+	In the proof of the previous theorem, we calculated that
+	\begin{equation}
+		0 \leq \norm{f-s_N}^2_2 = \angles{f,f} - \sum_{n=1}^N \abs{c_n}^2
+	\end{equation}
+	Therefore the following holds for all $N$
+	\begin{equation}
+		\sum_{n=1}^N \abs{c_n}^2 \leq \angles{f,f}
+	\end{equation}
+	Take the limit $N \to \infty$ to get the claim
+	\begin{equation}
+		\sum_{n} \abs{c_n}^2 = \sum_{n} \abs{\angles{f,\phi_n}}^2 \leq \norm{f}^2_2
+	\end{equation}
+	(Notice that the sum $\sum_{n=1}^N \abs{c_n}^2$ converges.)
+\end{proof}
+
 \begin{corollary}[Riemann-Lebesgue Lemma]
-	Let $(\phi_n)_n$ is an orthonormal system and $f \in pc([a,b])$, then
+	Let $(\phi_n)_n$ be an orthonormal system and $f \in pc([a,b])$, then
 	\begin{equation}
 		\lim_{n\to\infty} \angles{f,\phi_n} = 0
 	\end{equation}
 \end{corollary}
+
+\begin{proof}
+	In the proof of Bessel's inequality, we showed that the series $\sum_{n} \abs{\angles{f,\phi_n}}^2$ converges. Therefore, a necessary condition of convergence, is that the terms go to zero. 
+\end{proof}
+
 
 \begin{definition}[Complete Orthonormal System]
 	An orthonormal system $(\phi_n)_n$ is called \navy{complete} if 
@@ -907,6 +1004,26 @@
 		\sum_{n=1}^\infty \abs{\angles{f,\phi_n}}^2 = \norm{f}^2_2 \quad \forall f \in pc([a,b])
 	\end{equation}
 \end{definition}
+
+\begin{theorem}[]
+	Let
+	\begin{itemize}
+		\item $(\phi_n)_n$ be an orthonormal system 
+		\item $s_N(x) = \sum_{n=1}^N c_n \phi_n(x)$
+	\end{itemize}
+	Then $(\phi_n)_n$ is complete if and only if $(s_N)_N$ converges to $f$ in the $L^2$-norm. 
+
+	Precisely, $\lim_{N \to \infty} \norm{f - s_N}_2 = 0$ for every $f \in \text{pc}([a,b])$). 
+\end{theorem}
+
+\begin{proof}
+	Again, from the best approximation theorem, we calculated that
+	\begin{equation}
+		\norm{f - s_N}^2_2 = \angles{f,f} - \sum_{n} \abs{\angles{f,\phi_n}}^2 
+	\end{equation}
+	Then this converges to $0$ if and only if $(\phi_n)_n$ is complete.
+\end{proof}
+
 
 
 \subsection{Trigonometric Polynomials}
@@ -1049,9 +1166,23 @@
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	Let $\e > 0$. 
-
-	\improvement[inline]{Incomplete.}
+	Let $\e > 0$. By Fejer's theorem, there exists a trigonometric polynomial $p$ that uniformly approximates $f$: That is, $|f(x) - p(x)| < \e/2$. Then
+	\begin{equation}
+		\norm{f - p}_2 = \parens{\int_0^1 \abs{f(x)-p(x)}^2}^{1/2} \leq \e/2
+	\end{equation}
+	Suppose $p$ has degree $N$. Then 
+	\begin{equation}
+		S_N f - f = S_N f - S_N p + S_N p - f = S_N (f - p) + p - f
+	\end{equation}
+	Then by Minkowski's inequality
+	\begin{equation}
+		\norm{S_N f - f}_2 \leq \norm{S_N (f - p)}_2 + \norm{p - f}_2
+	\end{equation}
+	Bessel's inequality implies that $\norm{S_N f}_2 \leq \norm{f}_2$. Therefore $\norm{S_N (f-p)}_2 \leq \norm{f-p}_2 = \norm{p-f}_2$. Then
+	\begin{equation}
+		\norm{S_N f - f}_2 \leq 2 \norm{f-p}_2 \leq \e
+	\end{equation}
+	which proves the claim. 	
 \end{proof}
 
 \begin{corollary}[Parseval's Theorem]
@@ -1059,18 +1190,46 @@
 	\begin{equation}
 		\angles{f,g} = \sum_{n=-\infty}^\infty \hat{f}(n) \overline{\hat{g}(n)}
 	\end{equation}
+	As a special case
+	\begin{equation}
+		\norm{f}^2_2 = \sum_{n=-\infty}^\infty \abs{\hat{f}(n)}^2
+	\end{equation}
 \end{corollary}
+
+\begin{proof}
+	We compute
+	\begin{align*}
+		\angles{S_N f, g} &= \angles{\sum_{n=-N}^N \hat{f}(n) e^{2\pi i n x}, g} \\
+		&= \sum_{n=-N}^N \angles{\hat{f}(n) e^{2\pi i n x}, g} \\
+		&= \sum_{n=-N}^N \hat{f}(n) \angles{e^{2\pi i n x}, g} \\
+		&= \sum_{n=-N}^N \hat{f}(n) \int_0^1 e^{2\pi i n x} \overline{g(x)} dx \\
+		&= \sum_{n=-N}^N \hat{f}(n) \overline{\hat{g}(n)}
+	\end{align*}
+	Now notice that
+	\begin{equation}
+		\angles{S_N f, g} \to \angles{f,g}
+	\end{equation}
+	because
+	\begin{align*}
+		\abs{\angles{S_N f, g} - \angles{f,g}} &= \abs{\angles{S_N f - f, g}} \\
+		&\leq \norm{S_N f - f}_2 \norm{g}_2 \tag{Cauchy-Schwarz} \\
+		&\to 0 \text{ as } N \to \infty \tag{previous theorem} 
+	\end{align*}
+	The special case follows from setting $f=g$. 
+\end{proof}
+
 
 \begin{theorem}[]
 	Let $f$ be a 1-periodic continuous function and let $x \in \RR$. Suppose $f$ is differentiable at $x$. Then 
 	\begin{equation}
 		S_N f(x) \to f(x) \text{ as } N \to \infty
 	\end{equation}
-	As a special case
-	\begin{equation}
-		\norm{f}^2_2 = \sum_{n=-\infty}^\infty \abs{\hat{f}(n)}^2
-	\end{equation}
 \end{theorem}
+\begin{proof}
+	First by definition
+	\improvement[inline]{Proof incomplete.}
+\end{proof}
+
 
 
 \subsection{Weierstrass Theorem}
