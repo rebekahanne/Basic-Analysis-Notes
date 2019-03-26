@@ -1276,7 +1276,7 @@ Thus the claim follows. Indeed, for equality to be achieved, we must have that $
 
 We prove a sequence of lemmas before proving the theorem. 
 
-\begin{lemma}[Sequence of polynomials uniformly converging to absolute value function]
+\begin{lemma}[Sequence of polynomial (zero intercept) uniformly converging to absolute value function]
 	For every $a > 0$ there exists a sequence of polynomials $(p_n)_n$ with real coefficients such that $p_n(0) = 0$ $\forall n$ and
 	\begin{equation}
 		\sup_{x \in [-a,a]}\abs{p_n(x) - \abs{x}} \to 0 \text{ as } n \to \infty
@@ -1294,6 +1294,108 @@ We prove a sequence of lemmas before proving the theorem.
 \begin{lemma}[]
 	If $f \in \bar{A}$, then $|f| \in \bar{A}$.
 \end{lemma}
+\begin{proof}
+	By the previous lemma, there exists a sequence of polynomials (with zero intercept) converging uniformly to the absolute value function. Thus fix $\e > 0$. Let $a = \max_{x \in K} |f(x)|$. Then there exist coefficients $c_1,c_2,\ldots,c_N \in \RR$ such that
+	\begin{equation}\label{eq:stone-weierstrassuni}
+		\abs{\sum_{i=1}^n c_i y^i - \abs{y}} \leq \e \quad \forall \abs{y} \leq a
+	\end{equation}
+	\textbf{Note}: This sum does not have an intercept/constant term. Since $f \in \bar{A}$ and $A$ is a self-adjoint algebra, we have that
+	\begin{equation}
+		g = \sum_{i=1}^n c_i f^i \in \bar{A}
+	\end{equation}
+	But since Equation \ref{eq:stone-weierstrassuni} holds for all values $ y \in [-a,a]$, and we have that $\abs{f(x)} \leq a$, the same inequality holds for $y^i = f^i(x)$, $x \in K$. \textbf{Note:} This holds for every $x \in K$.
+	\begin{equation}
+		\abs{g(x) - \abs{f(x)}} = \abs{\sum_{i=1}^n c_i f^i(x) - \abs{f(x)}} \leq \e \quad x \in K
+	\end{equation}
+	This shows that $|f|$ can be uniformly approximated by functions in $\bar{A}$. Since $\bar{A}$ is closed, we have that $|f| \in \bar{A}$. 
+\end{proof}
+
+\begin{lemma}[$\bar{A}$ closed under max and min operations]
+	If $f_1,\ldots,f_m \in \bar{A}$ then $\min\{f_1,\ldots,f_n\} \in \bar{A}$ and $\max\{f_1,\ldots,f_n\} \in \bar{A}$
+\end{lemma}
+\begin{proof}
+	We prove for $m=2$ (and the general case follows by induction). Let $f,g \in \bar{A}$. We can write $\min\{f,g\}$ and $\max\{f,g\}$ as linear combinations of functions in $\bar{A}$. Indeed, observe that
+	\begin{align*}
+		\min\{f,g\} &= \frac{f - g}{2} - \frac{\abs{f-g}}{2} \\
+		\max\{f,g\} &= \frac{f - g}{2} + \frac{\abs{f-g}}{2} 
+	\end{align*}
+	Therefore, since $\bar{A}$ is a self-adjoint algebra and is closed under taking the absolute value, we have that $\bar{A}$ is also closed under taking the max and min of finitely many functions. 
+\end{proof}
+
+\begin{lemma}[Any two points that could lie on the graph of a function in $\bar{A}$ do lie on the graph of a function in $\bar{A}$]
+	For every $x_0,x_1 \in K$, $x_0 \neq x_1$ and $c_0, c_1 \in \RR$, there exists $f \in \bar{A}$ such that $f(x_i) = c_i$ for $i=0,1$. 
+\end{lemma}
+
+\begin{proof}
+	Using conditions (ii) and (iii) we have that there exist functions $g,h_0,h_1 \in \bar{A}$ such that
+	\begin{enumerate}
+		\item $g$ separates points: $g(x_0) \neq g(x_1)$
+		\item $h_0$ and $h_1$ don't vanish: $h_0(x_0) \neq 0$ and $h_1(x_1) \neq 0$. 
+	\end{enumerate}
+	Define
+	\begin{align*}
+		u_0(x) &= (g(x) - g(x_1))h_0(x) \imp u_0(x_1) = 0, u_0(x_0) \neq 0\\
+		u_1(x) &= (g(x) - g(x_0))h_1(x) \imp u_1(x_0) = 0, u_1(x_1) \neq 0
+	\end{align*}
+	Now let
+	\begin{equation}
+		f(x) = \frac{c_0 u_0(x)}{u_0(x_0)} + \frac{c_1 u_1(x)}{u_1(x_1)}
+	\end{equation}
+	It is clear that
+	\begin{align*}
+		f(x_0) &= c_0\\
+		f(x_1) &= c_1
+	\end{align*}
+	and these terms are well-defined (i.e., no issues with zero denominators).
+\end{proof}
+
+\begin{remark}
+	We can extend this lemma to finitely many points. Thus if $K$ were finite, we would have proved the Stone-Weierstrass theorem. 
+\end{remark}
+
+\begin{claim}
+	Let $f \in C(K)$ and $\e > 0$. For every $x \in K$ there exists $g_x \in \bar{A}$ such that 
+	\begin{enumerate}
+		\item $g_x(x) = f(x)$
+		\item $g_x(t) > f(t) - \e$
+	\end{enumerate}
+\end{claim}
+
+We are looking for $g_x$ like shown in the following figure:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=.5]{weierstrass.png}
+	\end{center}
+\end{figure}
+
+\begin{proof}
+	Take another point $y \in K$, $y \neq x$. By the previous lemma, we can find an $h_y \in \bar{A}$ such that
+	\begin{enumerate}
+		\item $h_y(x) = f(x)$ 
+		\item $h_y(y) = f(y)$
+	\end{enumerate}
+	Since $h_y$ is continuous, there exists a $\delta_y > 0$ such that
+	\begin{equation}
+		t \in B_{\delta_y}(y) \imp |h_y(t) - f(t)| < \e
+	\end{equation}
+	Notice that this implies that $h_y(t) > f(t) - \e$. Now notice that $\parens{B_{\delta_y}(y)}_{y \in K}$ is an open cover of $K$. Compactness implies the existence of a finite subcover, identified by points $y_1, \ldots, y_m$. Now let
+	\begin{equation}
+		g_x = \max\{h_{y_1},\ldots,h_{y_m}\}
+	\end{equation}
+	We have, by a previous lemma, that $g_x \in \bar{A}$. Further, it is clear that
+	\begin{equation}
+		g_x(x) = f(x) 
+	\end{equation}
+	since each $h_{y_i}(x) = x$ and
+	\begin{equation}
+		g_x(t) > f(t) - \e
+	\end{equation}
+	since by taking the max (pointwise) of elements for which this is true. This proves the claim. 
+\end{proof}
+	\textbf{Finally ready to complete the whole proof.}
+\begin{proof}[Proof of Stone-Weierstrass Theorem]
+	
+\end{proof}
 
 
 
