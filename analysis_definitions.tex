@@ -2,7 +2,7 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/03/25,17:14
+%% Generated on :  2019/03/29,8:34
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
@@ -188,6 +188,19 @@
 {\IfNoValueTF{#2}{#1} {#1\nonscript\:\delimsize\vert\allowbreak\nonscript\:\mathopen{}#2}}%
 \def\Set{\set*}%
 
+% hat
+\usepackage{scalerel,stackengine}
+\stackMath
+\newcommand\widehatt[1]{%
+\savestack{\tmpbox}{\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern-.6pt\bigwedge\kern-.6pt}%
+    {\rule[-\textheight/2]{1ex}{\textheight}}%WIDTH-LIMITED BIG WEDGE
+  }{\textheight}%
+}{0.5ex}}%
+\stackon[1pt]{#1}{\tmpbox}%
+}
+
 % Shortcut math
 \newcommand{\ls}{\leqslant}
 \newcommand{\gs}{\geqslant}
@@ -266,6 +279,7 @@
 \newcommand{\QQ}{\mathbbm Q}
 \newcommand{\WW}{\mathbbm W}
 \newcommand{\ZZ}{\mathbbm Z}
+\newcommand{\KK}{\mathbbm K}
 \renewcommand{\SS}{\mathbbm S}
 
 % Expectation/Probability
@@ -468,6 +482,41 @@ A sequence of 1-periodic continuous functions $(k_n)_n$ is called \navy{approxim
 \sup_{x \in \RR} \abs{f * k_n(x) - f(x)} \to 0
 \end{equation}
 as $n \to \infty$
+\end{definition}
+
+\begin{definition}[Norm]
+A map $\norm{\cdot}: X \to [0,\infty)$ is called a \navy{norm} if for all $x,y \in X$ and $\lambda \in \KK$ we have
+\begin{enumerate}
+\item $\norm{\lambda x} = |\lambda| \norm{x}$
+\item $\norm{x + y} \leq \norm{x} + \norm{y}$
+\item $\norm{x} = 0 \iff x = 0$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Normed vector space]
+A $\KK$-vector space equipped with a norm is called a \navy{normed vector space}. On every normed vector space we have a natural metric space structure defined by
+\begin{equation}
+d(x,y) = \norm{x-y}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Banach space]
+A complete normed vector space is called a \navy{Banach space}.
+\end{definition}
+
+\begin{definition}[Linear map]
+Let $X,Y$ be normed vector spaces. A map $T: X \to Y$ is called \navy{linear} if
+\begin{equation}
+T(x + \lambda y) = Tx + \lambda T y
+\end{equation}
+for every $x,y \in X$, $\lambda \in \KK$.
+\end{definition}
+
+\begin{definition}[Bounded]
+A linear map $T: X \to Y$ is called \navy{bounded} if there exists $C > 0$ such that
+\begin{equation}
+\norm{Tx}_Y \leq C \norm{x}_X \quad \forall x \in X
+\end{equation}
 \end{definition}
 
 \begin{definition}[Supremum, Infimum]

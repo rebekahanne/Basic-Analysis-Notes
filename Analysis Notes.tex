@@ -193,6 +193,19 @@
 {\IfNoValueTF{#2}{#1} {#1\nonscript\:\delimsize\vert\allowbreak\nonscript\:\mathopen{}#2}}%
 \def\Set{\set*}%
 
+% hat
+\usepackage{scalerel,stackengine}
+\stackMath
+\newcommand\widehatt[1]{%
+\savestack{\tmpbox}{\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern-.6pt\bigwedge\kern-.6pt}%
+    {\rule[-\textheight/2]{1ex}{\textheight}}%WIDTH-LIMITED BIG WEDGE
+  }{\textheight}% 
+}{0.5ex}}%
+\stackon[1pt]{#1}{\tmpbox}%
+}
+
 % Shortcut math
 \newcommand{\ls}{\leqslant}
 \newcommand{\gs}{\geqslant}
@@ -271,6 +284,7 @@
 \newcommand{\QQ}{\mathbbm Q}
 \newcommand{\WW}{\mathbbm W}
 \newcommand{\ZZ}{\mathbbm Z}
+\newcommand{\KK}{\mathbbm K}
 \renewcommand{\SS}{\mathbbm S}
 
 % Expectation/Probability
@@ -1411,6 +1425,128 @@ We are looking for $g_x$ like shown in the following figure:
 
 \newpage
 \section{Linear Operators and Derivatives}
+
+In this section
+\begin{itemize}
+	\item $\KK$ either one of the fields $\RR$ and $\CC$
+	\item $X$ a vector space over $\KK$
+\end{itemize}
+
+\begin{definition}[Norm]
+	A map $\norm{\cdot}: X \to [0,\infty)$ is called a \navy{norm} if for all $x,y \in X$ and $\lambda \in \KK$ we have
+	\begin{enumerate}
+		\item $\norm{\lambda x} = |\lambda| \norm{x}$
+		\item $\norm{x + y} \leq \norm{x} + \norm{y}$
+		\item $\norm{x} = 0 \iff x = 0$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Normed vector space]
+	A $\KK$-vector space equipped with a norm is called a \navy{normed vector space}. On every normed vector space we have a natural metric space structure defined by
+	\begin{equation}
+		d(x,y) = \norm{x-y}
+	\end{equation}
+\end{definition}
+
+\begin{definition}[Banach space]
+	A complete normed vector space is called a \navy{Banach space}. 
+\end{definition}
+
+\begin{definition}[Linear map]
+	Let $X,Y$ be normed vector spaces. A map $T: X \to Y$ is called \navy{linear} if
+	\begin{equation}
+		T(x + \lambda y) = Tx + \lambda T y
+	\end{equation}
+	for every $x,y \in X$, $\lambda \in \KK$. 
+\end{definition}
+
+\begin{definition}[Bounded]
+	A linear map $T: X \to Y$ is called \navy{bounded} if there exists $C > 0$ such that
+	\begin{equation}
+		\norm{Tx}_Y \leq C \norm{x}_X \quad \forall x \in X
+	\end{equation}
+\end{definition}
+
+\begin{remark}
+	Linear maps between normed vector spaces are also referred to as \navy{linear operators}. 
+\end{remark}
+
+\begin{theorem}[]
+	Let $T: X \to Y$ be a linear map. TFAE
+	\begin{enumerate}
+		\item $T$ is bounded
+		\item $T$ is continuous
+		\item $T$ is continuous at $0$
+		\item $\sup_{\norm{x}_X = 1} \norm{Tx}_Y < \infty$
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof (i) $\imp$ (ii)]
+	Suppose $T$ is bounded. Thus there exists $C > 0$ such that $\norm{Tx}_Y \leq C \norm{x}_X \ \forall x \in X$. Then for $x,y \in X$
+	\begin{align*}
+		\norm{Tx - Ty}_Y &= \norm{T(x-y)}_Y \tag{linearity} \\
+		&\leq C\norm{x - y}_X \tag{bounded}
+	\end{align*}
+	Fix $\e > 0$. Set $\d = \frac{\e}{C}$. Take $x,y \in X$ such that $\norm{x-y}_X < \d$. Then the calculation above gives that $\norm{Tx - Ty}_Y < \e$ for all $x,y \in X$ for which $\norm{x-y}_X < \d$. Thus $T$ is continuous. 
+\end{proof}
+
+\begin{proof}[Proof (ii) $\imp$ (iii)] Immediate.
+\end{proof}
+
+\begin{proof}[Proof (iii) $\imp$ (iv)] 
+	Since $T$ is continuous at $0$, there exists a $\d > 0$ such that for all $x \in X$ for which $\norm{x}_X \leq \d$ we have that $\norm{Tx}_Y \leq \e = 1$. Now fix $x \in X$ for which $\norm{x}_X = 1$. By scale preservation of norm, $\norm{\d x}_X = \d$. Therefore
+	\begin{equation}
+		\norm{T(\d x)}_Y \leq 1
+	\end{equation}
+	Further
+	\begin{equation}
+		\norm{T(\d x)}_Y = \d \norm{T x }_Y 
+	\end{equation}
+	so that $\norm{T x }_Y \leq \d^{-1}$. This holds for all $x \in X$ for which $\norm{x}_X = 1$. Therefore
+	\begin{equation}
+	 	\sup_{\norm{x}_X = 1} \norm{Tx}_Y \leq \inv{\d} < \infty
+	\end{equation} 
+\end{proof}
+
+\begin{proof}[Proof (iv) $\imp$ (i)]
+
+\end{proof} 
+
+
+\section{Practice}
+
+\subsection{2018 HW4}
+
+\begin{align*}
+	\widehatt{f * g}(n) &= \int_0^1 (f * g(t)) e^{-2\pi i n t}\ dt \\
+	&= \int_0^1 \parens{\int_0^1 f(x)g(t-x) \ dx} e^{-2\pi i n t} \ dt \\
+	&= \int_0^1 \parens{\int_0^1 f(x)g(t-x)  e^{-2\pi i n t} \ dx} \ dt \tag{inner integral didn't depend on $t$} \\
+	&= \int_0^1 \parens{\int_0^1 f(x)g(t-x)  e^{-2\pi i n t} \ dt} \ dx \tag{change order of integration} \\
+	&= \int_0^1 f(x) \parens{\int_0^1 g(t-x)  e^{-2\pi i n t} \ dt} \ dx \\
+	&=  \int_0^1 f(x) \parens{\int_{-x}^{1-x} g(y)  e^{-2\pi i n (y + x)} \ dy} \ dx \tag{change of vars: $t-x \to y$} \\
+	&= \int_0^1 f(x) e^{-2\pi i n x} \parens{\int_{0}^{1} g(y)  e^{-2\pi i n y} \ dy} \ dx \tag{$g$ periodic} \\
+	&= \int_0^1 f(x) e^{-2\pi i n x} \widehatt{g}(n) \ dx \\
+	&= \widehatt{g}(n) \int_0^1 f(x) e^{-2\pi i n x} \ dx \\
+	&= \widehatt{f}(n) \widehatt{g}(n)
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 
 \section[Differential Calculus in Rn]{Differential Calculus in $\RR^n$}
 
