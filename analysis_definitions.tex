@@ -2,7 +2,7 @@
 %% This is file, `analysis_definitions.tex',
 %% generated with the extract package.
 %% 
-%% Generated on :  2019/03/29,8:34
+%% Generated on :  2019/04/10,23:09
 %% From source  :  "Analysis Notes".tex
 %% Using options:  active,generate=analysis_definitions,extract-env={definition,algorithm}
 %% 
@@ -462,6 +462,23 @@ f(x) = \sum_{n=-N}^N c_n e^{2\pi i n x} \quad x \in \RR
 where $N \in \NN$ and $c_n \in \CC$. The largest $N$ for which either $c_N$ or $c_{-N}$ is non-zero is called the \navy{degree} of $f$.
 \end{definition}
 
+\begin{definition}[Fourier Coefficient, Fourier series]
+Let $f$ be a function that is
+\begin{itemize}
+\item $1$-periodic
+\item Piecewise continuous
+\end{itemize}
+and fix $n \in \ZZ$. Then the $n$th \navy{Fourier coefficient} is
+\begin{equation}
+\hat{f}(n) = \int_0^1 f(t) e^{-2 \pi i n t} \ dt
+\end{equation}
+The series
+\begin{equation}
+\sum_{n=-\infty^\infty} \hat{f}(n) e^{2\pi i n x}
+\end{equation}
+is called the \navy{Fourier series} of $f$.
+\end{definition}
+
 \begin{definition}[Partial sums]
 For a 1-periodic function $f \in \text{pc}$ we define the \navy{partial sums}
 \begin{equation}
@@ -473,6 +490,28 @@ S_Nf(x) = \sum_{n=-N}^N \hat{f}(n) e^{2\pi i nx}
 For two 1-periodic functions $f,g \in \text{pc}$ we define their \navy{convolution} by
 \begin{equation}
 f * g(x) = \int_0^1 f(t)g(x-t)dt
+\end{equation}
+\end{definition}
+
+\begin{definition}[Dirichlet Kernel]
+The sequence of functions $(D_N)_N$
+\begin{equation}
+D_N(x) = \sum_{n=-N}^N e^{2 \pi i n x}
+\end{equation}
+is called the \navy{Dirichlet kernel}.
+\end{definition}
+
+\begin{definition}[Fejer Kernel]
+The \navy{Fejer kernel} $K_N(x)$ is given by
+\begin{equation}
+K_N(x) = \frac{1}{N+1} \sum_{n=0}^N D_n(x)
+\end{equation}
+(that is, we consider the arithmetic mean of the Dirichlet kernel).
+\end{definition}
+
+\begin{definition}[Cesaro Means (?)]
+\begin{equation}
+\sigma_N f(x) = f * K_N(x)
 \end{equation}
 \end{definition}
 

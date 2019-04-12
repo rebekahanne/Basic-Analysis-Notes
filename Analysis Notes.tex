@@ -1079,6 +1079,24 @@ Thus the claim follows. Indeed, for equality to be achieved, we must have that $
 	
 \end{proof}
 
+\begin{definition}[Fourier Coefficient, Fourier series]
+	Let $f$ be a function that is
+	\begin{itemize}
+		\item $1$-periodic
+		\item Piecewise continuous
+	\end{itemize}
+	and fix $n \in \ZZ$. Then the $n$th \navy{Fourier coefficient} is 
+	\begin{equation}
+		\hat{f}(n) = \int_0^1 f(t) e^{-2 \pi i n t} \ dt
+	\end{equation}
+	The series
+	\begin{equation}
+		\sum_{n=-\infty^\infty} \hat{f}(n) e^{2\pi i n x} 
+	\end{equation}
+	is called the \navy{Fourier series} of $f$. 
+\end{definition}
+
+
 \begin{definition}[Partial sums]
 	For a 1-periodic function $f \in \text{pc}$ we define the \navy{partial sums} 
 	\begin{equation}
@@ -1093,6 +1111,53 @@ Thus the claim follows. Indeed, for equality to be achieved, we must have that $
 	\end{equation}
 \end{definition}
 
+\begin{definition}[Dirichlet Kernel]
+	The sequence of functions $(D_N)_N$
+	\begin{equation}
+		D_N(x) = \sum_{n=-N}^N e^{2 \pi i n x}
+	\end{equation}
+	is called the \navy{Dirichlet kernel}. 
+\end{definition}
+
+We arrive at this sequence by rewriting the partial sums of $f$ as follows:
+\begin{align*}
+	S_Nf(x) = \sum_{n=-N}^N \hat{f}(n) e^{2\pi i nx} &= \sum_{n=-N}^N \int_0^1 f(t) e^{-2 \pi i n t} \ dt \ e^{2\pi i nx} \tag{substitute def of fourier coefficent} \\
+	&= \int_0^1 \sum_{n=-N}^N f(t) e^{-2 \pi i n t} \ dt \ e^{2\pi i nx} \tag{exchange sum and integral} \\
+	&= \int_0^1 f(t) \sum_{n=-N}^N e^{-2 \pi i n t} \ dt \ e^{2\pi i nx} \\
+	&= \int_0^1 f(t) \sum_{n=-N}^N e^{2 \pi i n (x-t)} \ dt \\
+	&= f * D_N(x)
+\end{align*}
+
+\begin{definition}[Fejer Kernel]
+	The \navy{Fejer kernel} $K_N(x)$ is given by
+	\begin{equation}
+		K_N(x) = \frac{1}{N+1} \sum_{n=0}^N D_n(x) 	
+	\end{equation} 
+	(that is, we consider the arithmetic mean of the Dirichlet kernel). 
+\end{definition}
+
+\begin{definition}[Cesaro Means (?)]
+	\begin{equation}
+		\sigma_N f(x) = f * K_N(x)
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Fej\'er]
+	For every 1-periodic, continuous function $f$ we have
+	\begin{equation}
+		\sigma_N f \to f \text{ as } N \to \infty
+	\end{equation}
+	uniformly on $\RR$. 
+
+	In words, the sequence $\sigma_n$ of Ces\'aro means of the sequence $(s_n)$ of partial sums of the Fourier series of $f$ converges uniformly to $f$ on $[0,1]$.
+\end{theorem}
+
+\begin{corollary}
+	Every 1-periodic continuous function can be uniformly approximated by trigonometric polynomials. 
+\end{corollary}
+\begin{proof}
+	
+\end{proof}
 
 \begin{definition}[Approximation of Unity]
 	A sequence of 1-periodic continuous functions $(k_n)_n$ is called \navy{approximation of unity} if for all 1-periodic continuous functions $f$ we have that $f * k_n$ converges uniformly to $f$ on $\RR$. That is
@@ -1145,23 +1210,6 @@ Thus the claim follows. Indeed, for equality to be achieved, we must have that $
 	\improvement[inline]{Incomplete.}
 \end{proof} 
 
-\begin{theorem}[Fej\'er]
-	For every 1-periodic, continuous function $f$ we have
-	\begin{equation}
-		\sigma_N f \to f \text{ as } N \to \infty
-	\end{equation}
-	uniformly on $\RR$. 
-
-	In words, the sequence $\sigma_n$ of Ces\'aro means of the sequence $(s_n)$ of partial sums of the Fourier series of $f$ converges uniformly to $f$ on $[0,1]$.
-\end{theorem}
-
-\begin{corollary}
-	Every 1-periodic continuous function can be uniformly approximated by trigonometric polynomials. 
-\end{corollary}
-\begin{proof}
-	
-\end{proof}
-
 
 
 \begin{corollary}[Fej\'er kernel an approximation of unity]
@@ -1173,7 +1221,7 @@ Thus the claim follows. Indeed, for equality to be achieved, we must have that $
 	\improvement[inline]{Incomplete.}
 \end{proof}
 
-\begin{theorem}[Partial sum convoluted with 1-periodic, continuous function converges in 2-norm]
+\begin{theorem}[Partial sum of with 1-periodic, continuous function converges to function in 2-norm]
 	Let $f$ be a 1-periodic and continuous function. Then
 	\begin{equation}
 		\lim_{N \to \infty} \norm{S_N f - f}_2 = 0
@@ -1517,6 +1565,32 @@ In this section
 
 \subsection{2018 HW4}
 
+\subsubsection*{Problem 2}
+
+\begin{theorem}[]
+	Let
+	\begin{itemize}
+		\item $f \in C([0,1])$
+		\item $A \ss C([0,1])$ dense
+		\item $\int_0^1 f(x) \overline{a(x)} \ dx = 0$ for all $a \in A$
+	\end{itemize}
+	Then $f = 0$
+\end{theorem}
+\begin{proof}
+	We will show that $\int_0^1 \abs{f(x)}^2 = 0$. $f$ is continuous on a compact set, so it is bounded. Thus there exists $C > 0$ such that $|f(x)| \leq C$. Fix $\e > 0$. Since $A$ is dense in $C([0,1])$, there exists an $a \in A$ such that $\max_{x\in[0,1]} |f(x) - a(x)| < \e/C$. Then
+	\begin{align*}
+		\int_0^1 \abs{f(x)}^2 \ dx &= \int_0^1 f(x) \overline{f(x)} \ dx \\
+		&= \int_0^1 f(x) \overline{(f(x) - a(x) + a(x))} \ dx \\
+		&= \int_0^1 f(x) \overline{(f(x) - a(x))} \ dx + \int_0^1  f(x)\overline{a(x)} \ dx \\
+		&= \int_0^1 f(x) \overline{(f(x) - a(x))} \ dx \\
+		&\leq \int_0^1 |f(x)| \abs{f(x) - a(x)} \ dx \\
+		&\leq C \cdot (\e/C) = \e
+	\end{align*}
+	which proves the claim. 
+\end{proof}
+
+\subsubsection*{Problem 4}
+
 \begin{align*}
 	\widehatt{f * g}(n) &= \int_0^1 (f * g(t)) e^{-2\pi i n t}\ dt \\
 	&= \int_0^1 \parens{\int_0^1 f(x)g(t-x) \ dx} e^{-2\pi i n t} \ dt \\
@@ -1530,6 +1604,100 @@ In this section
 	&= \widehatt{f}(n) \widehatt{g}(n)
 \end{align*}
 
+
+\subsection{2019 Exam 2}
+
+\begin{claim}
+	Let $(c_n)_n$ be a sequence of complex numbers. Define
+	\begin{equation}
+		f_N(x) = \sum_{n=1}^N c_n \sin(2\pi n x)
+	\end{equation}
+	Then for $1 \leq l < k$ we have 
+	\begin{equation}
+		\int_0^1 \abs{f_k(x) - f_l(x)}^2 \ dx = \frac{1}{2} \sum_{n=l + 1}^k \abs{c_n}^2
+	\end{equation}
+\end{claim}
+\begin{proof}
+	\begin{align*}
+		\int_0^1 \abs{f_k(x) - f_l(x)}^2 \ dx &= \int_0^1 \abs{\sum_{n=l+1}^k c_n \sin(2\pi n x)}^2 \ dx \\
+		&= \int_0^1 \parens{\sum_{n_1=l+1}^k c_{n_1} \sin(2\pi n_1 x)}\parens{\sum_{n_2=l+1}^k \overline{c_{n_2}} \sin(2\pi n_2 x)} \ dx \tag{for $z \in \CC$ we have $\abs{z}^2 = zz^*$} \\
+		&= \sum_{n_1,n_2 = l + 1}^k \int_0^1 c_{n_1} \overline{c_{n_2}} \sin(2\pi n_1 x) \sin(2\pi n_2 x) \ dx \tag{exchange integral and sum, combine sums} \\
+		&= \sum_{n_1,n_2 = l + 1}^k c_{n_1} \overline{c_{n_2}} \int_0^1 \sin(2\pi n_1 x) \sin(2\pi n_2 x) \ dx 
+	\end{align*}
+	And we have that
+	\begin{equation}
+		\int_0^1 \sin(2\pi n_1 x) \sin(2\pi n_2 x) \ dx = 
+		\begin{cases}
+			\frac{1}{2} & n_1 = n_2 \geq 1 \\
+			0 & n_1 \neq n_2
+		\end{cases}
+	\end{equation}
+	So that, continuing the above string of inequalities
+	\begin{align*}
+		&= \frac{1}{2}\sum_{n=l+1}^k \abs{c_n}^2
+	\end{align*}
+\end{proof}
+
+\begin{claim}
+	Cauchy-Schwarz Inequality 
+	\begin{equation}
+		\abs{\angles{a,b}} \leq \norm{a}_{l^2} \norm{b}_{l^2}
+	\end{equation}
+\end{claim}
+\begin{proof}
+	\begin{align*}
+		\abs{\angles{a,b}} &= \abs{\sum_{n=1}^\infty a_n \overline{b}_n} \\
+		&\leq \sum_{n=1}^\infty \abs{a_n \overline{b}_n} \\
+		&= \sum_{n=1}^\infty \abs{a_n} \abs{\overline{b}_n} \\
+		&\leq \sum_{n=1}^\infty \parens{\frac{\abs{a_n}^2}{2} + \frac{\abs{b_n}^2}{2}} \\
+		&= 
+	\end{align*}
+	
+\end{proof}
+
+
+
+\begin{claim}
+	$\abs{e^{2\pi i n x}} = 1$
+\end{claim}
+
+
+\begin{claim}
+	Let $(f_j)_{n \in \NN}$ be a Cauchy sequence in $L^1_c([0,1])$. Then the Riemann-Lebesgue property holds uniformly for such a sequence. That is, for all $\e > 0$, there exists an $N$ such that
+	\begin{equation}
+		\abs{\int_0^1 f_j(x)e^{2\pi i n x} \ dx} < \e
+	\end{equation}
+	for every $j \in \NN$ and every $n \geq N$. 
+\end{claim}
+\begin{proof}
+	Fix $\e > 0$. The assumptions give us:
+	\begin{enumerate}
+		\item Riemann-Lebesgue property for each $f_j$: There exists an $N_j \in \NN$ such that $\forall n \geq N_j$ we have that
+		\begin{equation}
+			\abs{\int_0^1 f_j(x)e^{2\pi i n x} \ dx} < \frac{\e}{2}
+		\end{equation}
+		\item Cauchy sequence: There exists an $M \in \NN$ such that $\forall n,m \geq M$ we have that
+		\begin{equation}
+			\int_0^1 \abs{f_n(x) - f_m(x)} \ dx < \frac{\e}{2}
+		\end{equation}
+	\end{enumerate}
+
+	Fix an $j > M$. Then there is an $N_M$ such that $\abs{\int_0^1 f_M(x)e^{2\pi i n x} \ dx} < \frac{\e}{2}$ for all $n \geq N_M$. Then
+	\begin{align*}
+		\abs{\int_0^1 f_j(x)e^{2\pi i n x} \ dx} &= \abs{\int_0^1 (f_j(x) - f_M)e^{2\pi i n x} \ dx + \int_0^1 f_M(x)e^{2\pi i n x} \ dx} \\
+		&\leq \abs{\int_0^1 (f_j(x) - f_M)e^{2\pi i n x} \ dx} + \abs{\int_0^1 f_M(x)e^{2\pi i n x} \ dx} \\
+		&\leq \int_0^1 \abs{(f_j(x) - f_M)e^{2\pi i n x} \ dx} + \abs{\int_0^1 f_M(x)e^{2\pi i n x} \ dx} \\
+		&=  \int_0^1 \abs{(f_j(x) - f_M)}\abs{e^{2\pi i n x}} \ dx + \abs{\int_0^1 f_M(x)e^{2\pi i n x} \ dx} \\
+		&= \int_0^1 \abs{(f_j(x) - f_M)} \ dx + \abs{\int_0^1 f_M(x)e^{2\pi i n x} \ dx} \\
+		&\leq \frac{\e}{2} + \frac{\e}{2} \\
+		&= \e
+	\end{align*}
+	for all $n \geq N_M$. Thus this $N_M$ ``works'' for all $f_j$ where $j \geq M$. Therefore we set our $N$ to be
+	\begin{equation}
+		N = \max\Set{N_1,\ldots,N_M}
+	\end{equation}
+	
+\end{proof}
 
 
 
