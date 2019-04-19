@@ -1560,6 +1560,56 @@ In this section
 
 \end{proof} 
 
+\subsection{Equivalence of Norms}
+
+\begin{definition}[Equivalent]
+	Two norms $\norm{\cdot}_a$ and $\norm{\cdot}_b$ on a vector space $X$ are \navy{equivalent} if there exist constants $c,C > 0$ such that 
+	\begin{equation}
+		c\norm{x}_a \leq \norm{x}_b \leq C \norm{x}_a \quad \forall x \in X
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Equivalence of norms is an equivalence relation]
+\end{theorem}
+\begin{proof}
+	Let $n_a,n_b,n_c$ be norms. We check the three properties:
+	\begin{enumerate}
+		\item Reflexive: Let $c=C=1$. Then clearly $1 \cdot \norm{x}_a \leq \norm{x}_a \leq 1 \cdot \norm{x}_a$ for all $x \in X$. 
+		\item Symmetric: Suppose $n_a \sim n_b$. Then there exist constants $c,C > 0$ such that 
+		\begin{equation}
+			c\norm{x}_a \leq \norm{x}_b \leq C\norm{x}_a
+		\end{equation}
+		for all $x \in X$. But then
+		\begin{equation}
+			\frac{1}{C} \norm{x}_b \leq \norm{x}_a \leq \frac{1}{c}\norm{x}_b
+		\end{equation}
+		for all $x \in X$. Thus $n_b \sim n_a$.
+		\item Transitive: Suppose $n_a \sim n_b$ and $n_b \sim n_a$. Then there exist $c_1,c_2,C_1,C_2>0$ such that
+		\begin{equation}
+			c_1\norm{x}_a \leq \norm{x}_b \leq C_1\norm{x}_a
+		\end{equation}
+		and
+		\begin{equation}
+			c_2\norm{x}_b \leq \norm{x}_c \leq C_2\norm{x}_b
+		\end{equation}
+		for all $x \in X$. But then
+		\begin{equation}
+			c_1 c_2 \norm{x}_a \leq \norm{x}_c \leq C_1C_2\norm{x}_a
+		\end{equation}
+		Thus $n_a \sim n_c$.
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}[All norms equivalent on finite-dimensional vector space]
+	Let $X$ be a finite-dimensional $\mathbb{K}$-vector space. Then all norms on $X$ are equivalent. 
+\end{theorem}
+\begin{proof}
+	
+\end{proof}
+
+
+
+\section{The Baire category theorem}
 
 \section{Practice}
 
@@ -1715,10 +1765,6 @@ In this section
 
 
 \newpage
-
-\section[Differential Calculus in Rn]{Differential Calculus in $\RR^n$}
-
-\section{The Baire category theorem}
 
 \appendix
 
